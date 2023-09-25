@@ -4,6 +4,7 @@ from sqlalchemy.exc import IntegrityError
 
 from config import app, db, api
 # Add your model imports
+from models import User
 
 
 # Views go here!
