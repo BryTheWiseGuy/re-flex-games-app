@@ -1,6 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy import ForeignKey, CheckConstraint, ARRAY, DECIMAL
+from sqlalchemy import ForeignKey, CheckConstraint, DECIMAL
 from sqlalchemy.orm import validates
 
 from config import db, bcrypt
@@ -15,7 +15,7 @@ class User(db.Model, SerializerMixin):
     profile_image = db.Column(db.String)
     _password_hash = db.Column(db.String, unique=True, nullable=False)
     
-    # user_library = db.relationship('UserLibrary', backpopulates='user')
+    user_library = db.relationship('UserLibrary', back_populates='user')
     
     @hybrid_property
     def password_hash(self):
@@ -50,7 +50,7 @@ class Game(db.Model, SerializerMixin):
     game_image = db.Column(db.String, nullable=False)
     price = db.Column(DECIMAL(precision=10, scale=2), nullable=False)
     
-    # user_library = db.relationship('UserLibrary', back_populates='game')
+    user_library = db.relationship('UserLibrary', back_populates='games')
     # game_platform = db.relationship('GamePlatform', back_populates='game' )
     
     def __repr__(self):
@@ -63,6 +63,19 @@ class Game(db.Model, SerializerMixin):
                 game_image: {self.game_image}, \
                 price: {self.price}'
 
+class UserLibrary(db.Model, SerializerMixin):
+    __tablename__ = 'user_library'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey('users.id'), nullable=False)
+    game_id = db.Column(db.Integer, ForeignKey('games.id'), nullable=False)
+    
+    user = db.relationship('User', back_populates='user_library')
+    games = db.relationship('Game', back_populates='user_library')
+    
+    def __repr__(self):
+        return f'id: {self.id}, user: {self.user}, games: {self.games}'
+    
 # class Platform(db.Model, SerializerMixin):
 #     __tablename__ = 'platforms'
     
@@ -82,18 +95,6 @@ class Game(db.Model, SerializerMixin):
     # platform = db.relationship('Platform', back_populates='game_platform')
     
 
-# class UserLibrary(db.Model, SerializerMixin):
-#     __tablename__ = 'user_library'
-    
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, ForeignKey('users.id'), nullable=False)
-#     game_id = db.Column(db.Integer, ForeignKey('games.id'), nullable=False)
-    
-#     user = db.relationship('User', back_populates='user_library')
-#     game = db.relationship('Game', back_populates='user_library')
-    
-#     def __repr__(self):
-#         return f'id: {self.id}, user: {self.user}, games: {self.games}'
     
 # class ShoppingCart(db.Model, SerializerMixin):
 #     pass
