@@ -2,6 +2,7 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy import ForeignKey, CheckConstraint, DECIMAL
 from sqlalchemy.orm import validates
+from datetime import datetime
 
 from config import db, bcrypt
 
@@ -16,6 +17,7 @@ class User(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String, unique=True, nullable=False)
     
     user_library = db.relationship('UserLibrary', back_populates='user')
+    user_shopping_cart = db.relationship('ShoppingCart', back_populates='user')
     
     @hybrid_property
     def password_hash(self):
@@ -52,6 +54,7 @@ class Game(db.Model, SerializerMixin):
     
     user_library = db.relationship('UserLibrary', back_populates='games')
     game_platform = db.relationship('GamePlatform', back_populates='game' )
+    cart_items = db.relationship('CartItem', back_populates='game')
     
     def __repr__(self):
         return f'id: {self.id}, \
@@ -84,6 +87,10 @@ class Platform(db.Model, SerializerMixin):
     
     game_platform = db.relationship('GamePlatform', back_populates='platform')
     
+    def __repr__(self):
+        return f'ID: {self.id}, \
+                Platform: {self.platform}'
+    
 class GamePlatform(db.Model, SerializerMixin):
     __tablename__ = 'game_platform'
     
@@ -94,14 +101,40 @@ class GamePlatform(db.Model, SerializerMixin):
     game = db.relationship('Game', back_populates='game_platform')
     platform = db.relationship('Platform', back_populates='game_platform')
     
-# class ShoppingCart(db.Model, SerializerMixin):
-#     pass
+    def __repr__(self):
+        return f'Game: {self.game} \
+                Platform: {self.platform}'
+    
+class ShoppingCart(db.Model, SerializerMixin):
+    __tablename__ = 'shopping_cart'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey('users.id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    user = db.relationship('User', back_populates='user_shopping_cart')
+    cart_items = db.relationship('CartItem', back_populates='shopping_cart')
+    
+    def __repr__(self):
+        return f'ID: {self.id} \
+                Created: {self.created_at} \
+                User: {self.user} \
+                Items: {self.cart_items}'
 
-# class CartGame(db.Model, SerializerMixin):
-#     pass
-
-# class LibraryGame(db.Model, SerializerMixin):
-#     pass
+class CartItem(db.Model, SerializerMixin):
+    __tablename__ = 'cart_items'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    shopping_cart_id = db.Column(db.Integer, ForeignKey('shopping_cart.id'), nullable=False)
+    game_id = db.Column(db.Integer, ForeignKey('games.id'), nullable=False)
+    
+    shopping_cart = db.relationship('ShoppingCart', back_populates='cart_items')
+    game = db.relationship('Game', back_populates='cart_items')
+    
+    def __repr__(self):
+        return f'ID: {self.id} \
+                Shopping Cart: {self.shopping_cart} \
+                Game: {self.game}'
 
 # # Stretch Goal Models
 
