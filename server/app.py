@@ -8,16 +8,47 @@ from models import User, Game, Platform, UserLibrary, ShoppingCart, CartItem, Ga
 
 # Views go here!
 class UserLogin(Resource):
-    pass
+    def post(self):
+        user = User.query.filter(User.username == request.get_json()['username']).first()
+
+        session['user_id'] = user.id
+        return user.to_dict(), 200
 
 class UserLogout(Resource):
-    pass
+    def delete(self):
+        session['user_id'] = None
+
+        return {"message": "204: No Content"}, 204
 
 class UserSignUp(Resource):
-    pass
+    def post(self):
+        json_data = request.get_json()
+
+        user = User(
+            username = json_data.get('username'),
+            email = json_data.get('email'),
+            about_me = json_data.get('about_me'),
+            profile_image = json_data.get('profile_image')
+        )
+
+        user.password.hash = json_data.get('password')
+
+        db.session.add(user)
+        
+        try:
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
+            return {"message": "422: Unprocessable Entity"}, 422
 
 class CheckSession(Resource):
-    pass
+    def get(self):
+        user = User.query.filter(User.id == session.get('user_id')).first()
+
+        if user:
+            return user.to_dict(), 200
+        else:
+            return {"messge": "401: Unauthorized"}, 401
 
 class GamesResource(Resource):
     pass
