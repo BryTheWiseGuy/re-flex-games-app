@@ -1,4 +1,4 @@
-from flask import request, session, jsonify, make_response
+from flask import request, session, send_from_directory, redirect, url_for
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
@@ -50,8 +50,29 @@ class CheckSession(Resource):
         else:
             return {"messge": "401: Unauthorized"}, 401
 
-class GamesResource(Resource):
-    pass
+class HomePageResource(Resource):
+    def server_react_app():
+        return send_from_directory('/client/public', 'index.html')
+
+
+class GamesIndexResource(Resource):
+    def get(self):
+        if not session.get('user_id'):
+            return {"message": "401: Unauthorized"}, 401
+        else:
+            games = [game.to_dict() for game in Game.query.filter(Game.is_member == True).all()]
+
+            return games, 200
+        
+@app.before_request
+def check_if_member():
+    def increment_games_counter():
+        session['games_viewed'] = session.get('games_viewed', 0) + 1
+    if not session.get('user_id') \
+        and request.endpoint in ['/games/<int:id']:
+            increment_games_counter()
+            if session['games_viewed'] > 5:
+                return redirect(url_for('/account_signup'))
 
 class GameByIDResource(Resource):
     pass
@@ -80,6 +101,7 @@ class UserShoppingCartResource(Resource):
 class UserCartItemsResource(Resource):
     pass
 
+api.add_resource(HomePageResource, '/')
 api.add_resource(UserSignUp, '/account_signup', endpoint='/account_signup')
 api.add_resource(UserLogin, '/login', endpoint='/login')
 api.add_resource(UserLogout, '/logout', endpoint='/logout')
@@ -89,7 +111,7 @@ api.add_resource(UserByUsernameResource, '/users/<username>', endpoint='users/<u
 api.add_resource(UserLibraryByUsernameResource, '/users/<username>/library', endpoint='/users/<username>/library')
 api.add_resource(UserShoppingCartResource, '/users/<username>/shopping_cart', endpoint='/users/<username>/shopping_cart')
 api.add_resource(UserCartItemsResource, '/users/<username>/shopping_cart/item/<int:id>', endpoint='/users/<username>/shopping_cart/item/<int:id>')
-api.add_resource(GamesResource, '/games', endpoint='/games')
+api.add_resource(GamesIndexResource, '/games', endpoint='/games')
 api.add_resource(GameByIDResource, '/games/<int:id>', endpoint='/games/<int:id>')
 api.add_resource(GamePlatformsResource, '/platforms', endpoint='/platforms')
 api.add_resource(GamePlatformsForGameResource, '/games/<int:id>/platforms', endpoint='/games/<int:id>/platforms')
