@@ -51,7 +51,7 @@ class Game(db.Model, SerializerMixin):
     price = db.Column(DECIMAL(precision=10, scale=2), nullable=False)
     
     user_library = db.relationship('UserLibrary', back_populates='games')
-    # game_platform = db.relationship('GamePlatform', back_populates='game' )
+    game_platform = db.relationship('GamePlatform', back_populates='game' )
     
     def __repr__(self):
         return f'id: {self.id}, \
@@ -76,25 +76,23 @@ class UserLibrary(db.Model, SerializerMixin):
     def __repr__(self):
         return f'id: {self.id}, user: {self.user}, games: {self.games}'
     
-# class Platform(db.Model, SerializerMixin):
-#     __tablename__ = 'platforms'
+class Platform(db.Model, SerializerMixin):
+    __tablename__ = 'platforms'
     
-#     id = db.Column(db.Integer, primary_key=True)
-#     platform = db.Column(db.String, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    platform = db.Column(db.String, nullable=False)
     
-#     game_platform = db.relationship('GamePlatform', back_populates='platform')
+    game_platform = db.relationship('GamePlatform', back_populates='platform')
     
-# class GamePlatform(db.Model, SerializerMixin):
-#     __tablename__ = 'game_platform'
+class GamePlatform(db.Model, SerializerMixin):
+    __tablename__ = 'game_platform'
     
-#     id = db.Column(db.Integer, primary_key=True)
-#     platform_id = db.Column(db.Integer, ForeignKey('platforms.id'), nullable=False)
-#     game_id = db.Column(db.Integer, ForeignKey('games.id'), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    platform_id = db.Column(db.Integer, ForeignKey('platforms.id'), nullable=False)
+    game_id = db.Column(db.Integer, ForeignKey('games.id'), nullable=False)
     
-    # game = db.relationship('Game', back_populates='game_platform')
-    # platform = db.relationship('Platform', back_populates='game_platform')
-    
-
+    game = db.relationship('Game', back_populates='game_platform')
+    platform = db.relationship('Platform', back_populates='game_platform')
     
 # class ShoppingCart(db.Model, SerializerMixin):
 #     pass
