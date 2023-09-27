@@ -58,9 +58,10 @@ class CheckSession(Resource):
             return {"message": "401: Unauthorized"}, 401
 
 class HomePageResource(Resource):
-    def server_react_app():
-        return send_from_directory('/client/public', 'index.html')
-
+    def get(self):
+        # def serve_react_app():
+            # return send_from_directory('/client/public', 'index.html')
+            return '<h1>Welcome to the games store</h1>'
 
 class GamesIndexResource(Resource):
     def get(self):
@@ -134,16 +135,9 @@ class UserByUsernameResource(Resource):
             return {"message": "401: Unauthorized"}, 401
     
     def patch(self, username):
-        if 'user_username' not in session:
-            return {"message": "401: Unauthorized"}, 401
-        
-        if session.get('username') != username:
-            return {"message": "403: Forbidden"}, 403
-        
         user = User.query.filter(User.username == username).first()
         
-        if not user:
-            return {"message": "404: User not found"}, 404
+        check_for_authorization_and_authentication(session, username, user)
         
         allowed_attributes = ['email', 'about_me', 'username', 'profile_image']
         
@@ -163,16 +157,9 @@ class UserByUsernameResource(Resource):
             return {"message": "422: Change Unsuccessful"}, 422
     
     def delete(self, username):
-        if 'user_username' not in session:
-            return {"message": "401: Unauthorized"}, 401
-        
-        if session.get('username') != username:
-            return {"message": "403: Forbidden"}, 403
-        
         user = User.query.filter(User.username == username).first()
         
-        if not user:
-            return {"message": "404: User not found"}, 404
+        check_for_authorization_and_authentication(session, username, user)
         
         db.session.delete(user)
         
@@ -184,8 +171,10 @@ class UserByUsernameResource(Resource):
             return {"message": "500: Internal Server Error"}, 500
 
 class UserLibraryByUsernameResource(Resource):
-    def get(self):
+    def get(self, username):
         user = User.query.filter(User.username == session.get('user_username')).first()
+        
+        check_for_authorization_and_authentication(session, username, user)
         
         if user:
             user_library = UserLibrary.query.filter(UserLibrary.user_id == user.id).first()
@@ -200,6 +189,9 @@ class UserLibraryByUsernameResource(Resource):
     
     def post(self, username):
         user = User.query.filter(User.username == username).first()
+        
+        check_for_authorization_and_authentication(session, username, user)
+        
         game_id = request.get_json()['game_id']
         game = Game.query.get(game_id)
         
@@ -210,12 +202,15 @@ class UserLibraryByUsernameResource(Resource):
                 db.session.commit()
                 return {"message": "201: Game successfully added to library"}, 201
             else:
-                return {"message": "400: Game currently in library"}, 400
+                return {"message": "400: Game already in library"}, 400
         else:
-            return {"message": "401: Unauthorized"}, 404
+            return {"message": "404: User not found"}, 404
     
-    def delete(self):
+    def delete(self, username):       
         user = User.query.filter(User.username == session.get('user_username')).first()
+        
+        check_for_authorization_and_authentication(session, username, user)
+        
         game_id = request.get_json()['game_id']        
         game = Game.query.get(game_id)
         
@@ -229,11 +224,14 @@ class UserLibraryByUsernameResource(Resource):
             else:
                 return {"message": "404: Unable to locate game in library"}, 404
         else:
-            return {"message": "401: Unauthorized."}, 401
+            return {"message": "404: User not found"}, 404
 
 class UserShoppingCartResource(Resource):
-    def get(self):
+    def get(self, username):
         user = User.query.filter(User.username == session.get('user_username')).first()
+        
+        check_for_authorization_and_authentication(session, username, user)
+        
         user_shopping_cart = ShoppingCart.query.filter(ShoppingCart.user_id == user.id).first()
         
         if user_shopping_cart:
@@ -242,8 +240,11 @@ class UserShoppingCartResource(Resource):
         else:
             return {"message": "404: Shopping cart not found"}, 404
     
-    def post(self):
+    def post(self, username):
         user = User.query.filter(User.username == session.get('user_username')).first()
+        
+        check_for_authorization_and_authentication(session, username, user)
+        
         game_id = request.get_json()['game_id']
         game = Game.query.get(game_id)
         user_shopping_cart = ShoppingCart.query.filter(ShoppingCart.user_id == user.id).first()
@@ -256,8 +257,11 @@ class UserShoppingCartResource(Resource):
         else:
             return {"message": "401: Unauthorized"}, 401
     
-    def delete(self):
+    def delete(self, username):
         user = User.query.filter(User.username == session.get('user_username')).first()
+        
+        check_for_authorization_and_authentication(session, username, user)
+        
         game_id = request.get_json()['game_id']
         game = Game.query.get(game_id)
         user_shopping_cart = ShoppingCart.query.filter(ShoppingCart.user_id == user.id).first()
@@ -271,7 +275,60 @@ class UserShoppingCartResource(Resource):
             return {"message": "401: Unauthorized"}, 401
 
 class UserCartItemsResource(Resource):
-    pass
+    def post(self, username):
+        user = User.query.filter(User.username == session.get('user_username')).first()
+        check_for_authorization_and_authentication(session, username, user)
+        
+        data = request.get_json()
+        game_id = data.get('game_id')
+        
+        game = Game.query.get(game_id)
+        if not game:
+            return {"message": "404: Game not found"}, 404
+        
+        user_shopping_cart = ShoppingCart.query.filter(ShoppingCart.user_id == user.id).first()
+        if not user_shopping_cart:
+            return {"message": "404: Shopping cart not found"}, 404
+        if CartItem.query.filter_by(shopping_cart_id=user_shopping_cart.id, game_id=game.id).first():
+            return {"message": "400: Game already in shopping cart"}, 400
+        
+        new_cart_item = CartItem(shopping_cart_id=user_shopping_cart.id, game_id=game.id)
+        db.session.add(new_cart_item)
+        
+        try:
+            db.session.commit()
+        except IntegrityError as e:
+            return {"message": "500: Internal Server Error"}, 500
+        
+        return {"message": "Game successfully added to shopping cart"}, 200
+    
+    def delete(self, username):
+        user = User.query.filter(User.username == session.get('user_username')).first()
+        check_for_authorization_and_authentication(session, username, user)
+        
+        data = request.get_json()
+        game_id = data.get('game_id')
+        
+        game = Game.query.get(game_id)
+        if not game:
+            return {"message": "404: Game not found"}, 404
+        
+        user_shopping_cart = ShoppingCart.query.filter(ShoppingCart.user_id == user.id).first()
+        if not user_shopping_cart:
+            return {"message": "404: Shopping cart not found"}, 404
+        if not CartItem.query.filter_by(shopping_cart_id=user_shopping_cart.id, game_id=game.id).first():
+            return {"message": "404: Game not found in shopping cart"}, 404
+        
+        cart_item = CartItem.query.filter_by(shopping_cart_id=user_shopping_cart.id, game_id=game.id).first()
+        
+        db.session.delete(cart_item)
+        
+        try:
+            db.session.commit()
+        except IntegrityError as e:
+            return {"message": "500: Internal Server Error"}, 500
+        
+        return {"message": "404: Game successfully removed from shopping cart"}, 404
 
 api.add_resource(HomePageResource, '/')
 api.add_resource(UserSignUp, '/account_signup', endpoint='/account_signup')
@@ -289,9 +346,43 @@ api.add_resource(GamePlatformsResource, '/platforms', endpoint='/platforms')
 api.add_resource(GamePlatformsForGameResource, '/games/<int:id>/platforms', endpoint='/games/<int:id>/platforms')
 api.add_resource(GamesForPlatformResource, '/platforms/<string:platform>/games', endpoint='/platforms/<platform>/games')
 
-# @app.route('/')
-# def index():
-#     return '<h1>Project Server</h1>'
+# Authorization and Authentication Functions
+
+def check_if_authorized(session):
+    if 'user_username' not in session:
+        return {"message": "401: Unauthorized"}, 401
+    else:
+        pass
+
+def check_if_session_match(session, username):
+    if session.get('user_username') != username:
+        return {"message": "403: Forbidden"}, 403
+    else:
+        pass
+
+def check_if_user(user):
+    if not user:
+        return {"message": "404: User not found"}, 404
+    else:
+        pass
+
+def check_for_authorization_and_authentication(session, username, user):
+    auth_response = check_if_authorized(session)
+    if auth_response:
+        return auth_response
+    else:
+        pass
+    session_match_response = check_if_session_match(session, username)
+    if session_match_response:
+        return session_match_response
+    else:
+        pass
+    user_response = check_if_user(user)
+    if user_response:
+        return user_response
+    else:
+        pass
+        
 
 
 if __name__ == '__main__':

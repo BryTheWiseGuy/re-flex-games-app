@@ -54,4 +54,4 @@ jspm_packages
 __pycache__
 
 # App Secret Key File Location
-config.py
+.env
