@@ -53,7 +53,7 @@ class Game(db.Model, SerializerMixin):
     price = db.Column(db.Float, nullable=False)
     
     user_library = db.relationship('UserLibrary', back_populates='game')
-    # game_platform = db.relationship('GamePlatform', back_populates='game' )
+    game_platform = db.relationship('GamePlatform', back_populates='game')
     # cart_items = db.relationship('CartItem', back_populates='game')
     
     def __repr__(self):
@@ -98,7 +98,7 @@ class GamePlatform(db.Model, SerializerMixin):
     platform_id = db.Column(db.Integer, ForeignKey('platforms.id'), nullable=False)
     game_id = db.Column(db.Integer, ForeignKey('games.id'), nullable=False)
     
-    # game = db.relationship('Game', back_populates='game_platform')
+    game = db.relationship('Game', back_populates='game_platform')
     platform = db.relationship('Platform', back_populates='game_platform')
     
     def __repr__(self):

@@ -83,48 +83,48 @@ if __name__ == '__main__':
         for library in user_library_data:
             db.session.add(library)
         
-        # # Platform Seed
-        # print("Seeding platforms...")
+        # Platform Seed
+        print("Seeding platforms...")
         
-        # platform_data=[
-        #     Platform(
-        #         platform="PlayStation 5"
-        #     ),
-        #     Platform(
-        #         platform="Xbox Series S"
-        #     ),
-        #     Platform(
-        #         platform="Xbox Series X"
-        #     ),
-        #     Platform(
-        #         platform="Nintendo Switch"
-        #     ),
-        #     Platform(
-        #         platform="MacOS"
-        #     ),
-        #     Platform(
-        #         platform="Microsoft Windows PC"
-        #     ),
-        #     Platform(
-        #         platform="PlayStation 4"
-        #     )
-        # ]
+        platform_data=[
+            Platform(
+                platform="PlayStation 5"
+            ),
+            Platform(
+                platform="Xbox Series S"
+            ),
+            Platform(
+                platform="Xbox Series X"
+            ),
+            Platform(
+                platform="Nintendo Switch"
+            ),
+            Platform(
+                platform="MacOS"
+            ),
+            Platform(
+                platform="Microsoft Windows PC"
+            ),
+            Platform(
+                platform="PlayStation 4"
+            )
+        ]
         
-        # for platform in platform_data:
-        #     db.session.add(platform)
+        for platform in platform_data:
+            db.session.add(platform)
         
-        # # GamePlatform Seed
-        # print("Seeding Game Platform Data...")
+        # GamePlatform Seed
+        print("Seeding Game Platform Data...")
         
-        # game_platform_data = [
-        #     GamePlatform(
-        #         game_id=1,
-        #         platform_id=1
-        #     )
-        # ]
+        game_platform_data = [
+            GamePlatform(
+                game_id=1,
+                platform_id=1
+            )
+        ]
         
-        # for game_platform in game_platform_data:
-        #     db.session.add(game_platform)
+        for game_platform in game_platform_data:
+            db.session.add(game_platform)
         
         # # ShoppingCart Seed
         # print("Seeding Shopping Carts...")

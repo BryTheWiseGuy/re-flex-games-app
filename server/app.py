@@ -9,8 +9,7 @@ ma = Marshmallow(app)
 
 # Model Schemas
 
-class User_Schema(ma.SQLAlchemySchema):
-    
+class User_Schema(ma.SQLAlchemySchema):   
     class Meta:
         model = User
     
@@ -25,8 +24,7 @@ class User_Schema(ma.SQLAlchemySchema):
 singular_user_schema = User_Schema()
 multiple_user_schema = User_Schema(many=True)
 
-class Game_Schema(ma.SQLAlchemySchema):
-    
+class Game_Schema(ma.SQLAlchemySchema):   
     class Meta:
         model = Game
     
@@ -38,13 +36,12 @@ class Game_Schema(ma.SQLAlchemySchema):
     publisher = ma.auto_field()
     game_image = ma.auto_field()
     price = ma.auto_field()
-    # game_platform = ma.Nested()
-
+    game_platform = ma.Pluck("Game_Platform_Schema", 'platform', many=True)
+    
 singular_game_schema = Game_Schema()
 multiple_game_schema = Game_Schema(many=True)
 
 class User_Library_Schema(ma.SQLAlchemySchema):
-
     class Meta:
         model = UserLibrary
     
@@ -52,6 +49,27 @@ class User_Library_Schema(ma.SQLAlchemySchema):
     game = ma.Nested(singular_game_schema)
     
 user_library_schema = User_Library_Schema()
+
+class Platform_Schema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Platform
+        
+    id = ma.auto_field()
+    platform = ma.auto_field()
+    
+singular_platform_schema = Platform_Schema()
+multiple_platform_schema = Platform_Schema(many=True)
+
+class Game_Platform_Schema(ma.SQLAlchemySchema):
+    class Meta:
+        model = GamePlatform
+        
+    id = ma.auto_field()
+    game = ma.Nested(singular_game_schema)
+    platform = ma.Nested(singular_platform_schema)
+
+singular_game_platform_schema = Game_Platform_Schema()
+multiple_game_platform_schema = Game_Platform_Schema(many=True)
     
 # API Resources
 
@@ -137,16 +155,15 @@ class GameByIDResource(Resource):
 
 class GamePlatformsResource(Resource):
     def get(self):
-        platforms = [platform.to_dict() for platform in Platform.query.all()]
+        platforms = Platform.query.all()
         
-        return platforms, 200
+        return multiple_platform_schema.dump(platforms), 200
 
 class GamePlatformsForGameResource(Resource):
     def get(self, game_id):
         platforms = Platform.query.join(GamePlatform).filter(GamePlatform.game_id == game_id).all()        
-        platform_dict = [platform.to_dict for platform in platforms]
         
-        return platform_dict, 200                  
+        return [multiple_game_platform_schema.dump(game) for game in platforms], 200         
 
 class GamesForPlatformResource(Resource):
     def get(self, platform):
@@ -190,9 +207,9 @@ class UserByUsernameResource(Resource):
         
         allowed_attributes = ['email', 'about_me', 'username', 'profile_image']
         
-        for attr in request.form:
+        for attr in request.json:
             if attr in allowed_attributes:
-                setattr(user, attr, request.form(attr))
+                setattr(user, attr, request.json[attr])
             else:
                 return {"message": f"400: Attribute cannot be changed"}, 400
         
@@ -207,21 +224,17 @@ class UserByUsernameResource(Resource):
     
     def delete(self, username):
         user = User.query.filter(User.username == username).first()
-        user_library = UserLibrary.query.filter(UserLibrary.user_id==user.id).first()
-        user_shopping_cart = ShoppingCart.query.filter(ShoppingCart.user_id==user.id).first()
+        UserLibrary.query.filter(UserLibrary.user_id==user.id).delete()
+        # user_shopping_cart = ShoppingCart.query.filter(ShoppingCart.user_id==user.id).first()
         
         check_for_authorization_and_authentication(session, username, user)
-        
+
         db.session.delete(user)
-        db.session.delete(user_library)
-        db.session.delete(user_shopping_cart)
+        # db.session.delete(user_shopping_cart)
         
-        try:
-            db.session.commit()
-            return {"message": f"200: Account successfully deleted"}, 200
-        except IntegrityError as e:
-            db.session.rollback()
-            return {"message": "500: Internal Server Error"}, 500
+        
+        db.session.commit()
+        return {"message": f"200: Account successfully deleted"}, 200
 
 class UserLibraryByUsernameResource(Resource):
     def get(self, username):
