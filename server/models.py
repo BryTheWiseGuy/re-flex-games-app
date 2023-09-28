@@ -1,6 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy import ForeignKey, CheckConstraint, DECIMAL
+from sqlalchemy import ForeignKey, CheckConstraint
 from sqlalchemy.orm import validates
 from datetime import datetime
 
@@ -50,16 +50,16 @@ class Game(db.Model, SerializerMixin):
     release_date = db.Column(db.DateTime, nullable=False)
     publisher = db.Column(db.String, nullable=False)
     game_image = db.Column(db.String, nullable=False)
-    price = db.Column(DECIMAL(precision=10, scale=2), nullable=False)
+    price = db.Column(db.Float, nullable=False)
     
-    user_library = db.relationship('UserLibrary', back_populates='games')
-    game_platform = db.relationship('GamePlatform', back_populates='game' )
-    cart_items = db.relationship('CartItem', back_populates='game')
+    user_library = db.relationship('UserLibrary', back_populates='game')
+    # game_platform = db.relationship('GamePlatform', back_populates='game' )
+    # cart_items = db.relationship('CartItem', back_populates='game')
     
     def __repr__(self):
         return f'id: {self.id}, \
                 title: {self.title}, \
-                desacription: {self.description}, \
+                description: {self.description}, \
                 genre: {self.genre}, \
                 release_date: {self.release_date}, \
                 publisher: {self.publisher}, \
@@ -73,8 +73,8 @@ class UserLibrary(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, ForeignKey('users.id'), nullable=False)
     game_id = db.Column(db.Integer, ForeignKey('games.id'), nullable=False)
     
+    game = db.relationship('Game', back_populates='user_library')
     user = db.relationship('User', back_populates='user_library')
-    games = db.relationship('Game', back_populates='user_library')
     
     def __repr__(self):
         return f'id: {self.id}, user: {self.user}, games: {self.games}'
@@ -98,7 +98,7 @@ class GamePlatform(db.Model, SerializerMixin):
     platform_id = db.Column(db.Integer, ForeignKey('platforms.id'), nullable=False)
     game_id = db.Column(db.Integer, ForeignKey('games.id'), nullable=False)
     
-    game = db.relationship('Game', back_populates='game_platform')
+    # game = db.relationship('Game', back_populates='game_platform')
     platform = db.relationship('Platform', back_populates='game_platform')
     
     def __repr__(self):
@@ -129,7 +129,7 @@ class CartItem(db.Model, SerializerMixin):
     game_id = db.Column(db.Integer, ForeignKey('games.id'), nullable=False)
     
     shopping_cart = db.relationship('ShoppingCart', back_populates='cart_items')
-    game = db.relationship('Game', back_populates='cart_items')
+    # game = db.relationship('Game', back_populates='cart_items')
     
     def __repr__(self):
         return f'ID: {self.id} \

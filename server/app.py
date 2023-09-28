@@ -1,12 +1,60 @@
 from flask import request, session, send_from_directory, redirect, url_for
 from flask_restful import Resource
+from flask_marshmallow import Marshmallow
+from marshmallow import fields
 from sqlalchemy.exc import IntegrityError
-
 from config import app, db, api
-# Add your model imports
 from models import User, Game, Platform, UserLibrary, ShoppingCart, CartItem, GamePlatform
+ma = Marshmallow(app)
 
-# Views go here!
+# Model Schemas
+
+class User_Schema(ma.SQLAlchemySchema):
+    
+    class Meta:
+        model = User
+    
+    id = ma.auto_field()
+    username = ma.auto_field()
+    about_me = ma.auto_field()
+    profile_image = ma.auto_field()
+    email = ma.auto_field()
+    user_library = ma.Nested("User_Library_Schema", many=True)
+    # user_shopping_cart = ma.Nested()
+
+singular_user_schema = User_Schema()
+multiple_user_schema = User_Schema(many=True)
+
+class Game_Schema(ma.SQLAlchemySchema):
+    
+    class Meta:
+        model = Game
+    
+    id = ma.auto_field()
+    title = ma.auto_field()
+    description = ma.auto_field()
+    genre = ma.auto_field()
+    release_date = ma.auto_field()
+    publisher = ma.auto_field()
+    game_image = ma.auto_field()
+    price = ma.auto_field()
+    # game_platform = ma.Nested()
+
+singular_game_schema = Game_Schema()
+multiple_game_schema = Game_Schema(many=True)
+
+class User_Library_Schema(ma.SQLAlchemySchema):
+
+    class Meta:
+        model = UserLibrary
+    
+    id = ma.auto_field()
+    game = ma.Nested(singular_game_schema)
+    
+user_library_schema = User_Library_Schema()
+    
+# API Resources
+
 class UserLogin(Resource):
     def post(self):
         data = request.get_json()
@@ -19,7 +67,7 @@ class UserLogin(Resource):
         user = User.query.filter(User.username == username).first()
         if user and user.authenticate(password):
             session['user_username'] = user.username
-            return user.to_dict(), 200
+            return singular_user_schema.dump(user), 200
         else:
             return {"message": "401: Login failed"}, 401
 
@@ -44,7 +92,8 @@ class UserSignUp(Resource):
         
         try:
             db.session.commit()
-            return {"message": "201: Account created"}, 201
+            session['user_username'] = user.username
+            return singular_user_schema.dump(user), 201
         except IntegrityError as e:
             db.session.rollback()
             return {"message": "422: Unprocessable Entity"}, 422
@@ -65,8 +114,8 @@ class HomePageResource(Resource):
 
 class GamesIndexResource(Resource):
     def get(self):
-        games = [game.to_dict() for game in Game.query.all()]
-        return games, 200
+        games = Game.query.all()
+        return multiple_game_schema.dump(games), 200
         
 @app.before_request
 def check_if_member():
@@ -82,7 +131,7 @@ class GameByIDResource(Resource):
     def get(self, id):
         game = Game.query.filter(Game.id == id).first()       
         if game:
-            return game.to_dict(), 200
+            return singular_game_schema.dump(game), 200
         else:
             return {"message": "404: Game not found"}, 404
 
@@ -108,11 +157,11 @@ class GamesForPlatformResource(Resource):
 
 class UsersResource(Resource):
     def get(self):
-        if 'user_username' in session:
-            users = [user.to_dict() for user in User.query.all()]
-            return users, 200
-        else:
-            return {"message": "401: Unauthorized"}, 401
+        # if 'user_username' in session:
+            users = User.query.all()
+            return multiple_user_schema.dump(users), 200
+        # else:
+        #     return {"message": "401: Unauthorized"}, 401
 
 class UserByUsernameResource(Resource):
     def get(self, username):
@@ -121,7 +170,7 @@ class UserByUsernameResource(Resource):
             if logged_in_username == username:
                 user = User.query.filter_by(username=username).first()
                 if user:
-                    return user.to_dict(), 200
+                    return singular_user_schema.dump(user), 200
             else:
                 user = User.query.filter_by(username=username).first()
                 if user:
@@ -131,8 +180,8 @@ class UserByUsernameResource(Resource):
                         "profile_image": user.profile_image
                     }
                     return profile_data, 200
-        else:        
-            return {"message": "401: Unauthorized"}, 401
+                else:        
+                    return {"message": "401: Unauthorized"}, 401
     
     def patch(self, username):
         user = User.query.filter(User.username == username).first()
@@ -145,23 +194,27 @@ class UserByUsernameResource(Resource):
             if attr in allowed_attributes:
                 setattr(user, attr, request.form(attr))
             else:
-                return {"message": f"400: Attribute '{attr}' cannot be changed"}, 400
+                return {"message": f"400: Attribute cannot be changed"}, 400
         
         db.session.add(user)
         
         try:
             db.session.commit()
-            return {"message": f"200: '{attr}' successfully updated"}, 200
+            return {"message": f"200: Attribute successfully updated"}, 200
         except IntegrityError as e:
             db.session.rollback()
             return {"message": "422: Change Unsuccessful"}, 422
     
     def delete(self, username):
         user = User.query.filter(User.username == username).first()
+        user_library = UserLibrary.query.filter(UserLibrary.user_id==user.id).first()
+        user_shopping_cart = ShoppingCart.query.filter(ShoppingCart.user_id==user.id).first()
         
         check_for_authorization_and_authentication(session, username, user)
         
         db.session.delete(user)
+        db.session.delete(user_library)
+        db.session.delete(user_shopping_cart)
         
         try:
             db.session.commit()
@@ -172,16 +225,15 @@ class UserByUsernameResource(Resource):
 
 class UserLibraryByUsernameResource(Resource):
     def get(self, username):
-        user = User.query.filter(User.username == session.get('user_username')).first()
+        user = User.query.filter(User.username == username).first()
         
         check_for_authorization_and_authentication(session, username, user)
         
         if user:
-            user_library = UserLibrary.query.filter(UserLibrary.user_id == user.id).first()
-            
+            user_library = UserLibrary.query.filter(UserLibrary.user_id == user.id).all()
+
             if user_library:
-                user_library_games = [game.to_dict() for game in user_library]
-                return user_library_games, 200
+                return [singular_game_schema.dump(game.games) for game in user_library], 200
             else:
                 return {"message": "404: User library not found."}, 404
         else:
@@ -207,7 +259,7 @@ class UserLibraryByUsernameResource(Resource):
             return {"message": "404: User not found"}, 404
     
     def delete(self, username):       
-        user = User.query.filter(User.username == session.get('user_username')).first()
+        user = User.query.filter(User.username == username).first()
         
         check_for_authorization_and_authentication(session, username, user)
         
@@ -228,7 +280,7 @@ class UserLibraryByUsernameResource(Resource):
 
 class UserShoppingCartResource(Resource):
     def get(self, username):
-        user = User.query.filter(User.username == session.get('user_username')).first()
+        user = User.query.filter(User.username == username).first()
         
         check_for_authorization_and_authentication(session, username, user)
         
@@ -241,7 +293,7 @@ class UserShoppingCartResource(Resource):
             return {"message": "404: Shopping cart not found"}, 404
     
     def post(self, username):
-        user = User.query.filter(User.username == session.get('user_username')).first()
+        user = User.query.filter(User.username == username).first()
         
         check_for_authorization_and_authentication(session, username, user)
         
@@ -276,7 +328,7 @@ class UserShoppingCartResource(Resource):
 
 class UserCartItemsResource(Resource):
     def post(self, username):
-        user = User.query.filter(User.username == session.get('user_username')).first()
+        user = User.query.filter(User.username == username).first()
         check_for_authorization_and_authentication(session, username, user)
         
         data = request.get_json()
@@ -303,7 +355,7 @@ class UserCartItemsResource(Resource):
         return {"message": "Game successfully added to shopping cart"}, 200
     
     def delete(self, username):
-        user = User.query.filter(User.username == session.get('user_username')).first()
+        user = User.query.filter(User.username == username).first()
         check_for_authorization_and_authentication(session, username, user)
         
         data = request.get_json()
@@ -330,6 +382,8 @@ class UserCartItemsResource(Resource):
         
         return {"message": "404: Game successfully removed from shopping cart"}, 404
 
+# API Endpoints
+
 api.add_resource(HomePageResource, '/')
 api.add_resource(UserSignUp, '/account_signup', endpoint='/account_signup')
 api.add_resource(UserLogin, '/login', endpoint='/login')
@@ -339,7 +393,7 @@ api.add_resource(UsersResource, '/users', endpoint='/users')
 api.add_resource(UserByUsernameResource, '/users/<username>', endpoint='users/<username>')
 api.add_resource(UserLibraryByUsernameResource, '/users/<username>/library', endpoint='/users/<username>/library')
 api.add_resource(UserShoppingCartResource, '/users/<username>/shopping_cart', endpoint='/users/<username>/shopping_cart')
-api.add_resource(UserCartItemsResource, '/users/<username>/shopping_cart/item/<int:id>', endpoint='/users/<username>/shopping_cart/item/<int:id>')
+api.add_resource(UserCartItemsResource, '/users/<username>/shopping_cart/items', endpoint='/users/<username>/shopping_cart/item/<int:id>')
 api.add_resource(GamesIndexResource, '/games', endpoint='/games')
 api.add_resource(GameByIDResource, '/games/<int:id>', endpoint='/games/<int:id>')
 api.add_resource(GamePlatformsResource, '/platforms', endpoint='/platforms')
