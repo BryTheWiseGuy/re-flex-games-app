@@ -51,6 +51,19 @@ if __name__ == '__main__':
                 publisher="Mihoyo",
                 game_image="Image here",
                 price=0.00
+            ),
+            Game(
+                title="Final Fantasy XVI",
+                description="It's a fantasy game!",
+                genre="Action Role Playing",
+                release_date=datetime(
+                    year=2023,
+                    month=6,
+                    day=22
+                    ),
+                publisher="Square Enix",
+                game_image="Image here",
+                price=69.99
             )
         ]
         
@@ -120,35 +133,58 @@ if __name__ == '__main__':
             GamePlatform(
                 game_id=1,
                 platform_id=1
+            ),
+            GamePlatform(
+                game_id=1,
+                platform_id=6
+            ),
+            GamePlatform(
+                game_id=2,
+                platform_id=1
+            ),
+            GamePlatform(
+                game_id=2,
+                platform_id=6
+            ),
+            GamePlatform(
+                game_id=3,
+                platform_id=1
+            ),GamePlatform(
+                game_id=3,
+                platform_id=2
             )
         ]
         
         for game_platform in game_platform_data:
             db.session.add(game_platform)
         
-        # # ShoppingCart Seed
-        # print("Seeding Shopping Carts...")
+        # ShoppingCart Seed
+        print("Seeding Shopping Carts...")
         
-        # shopping_cart_data = [
-        #     ShoppingCart(
-        #         user_id=1
-        #     )
-        # ]
+        shopping_cart_data = [
+            ShoppingCart(
+                user_id=1,
+            )
+        ]
         
-        # for shopping_cart in shopping_cart_data:
-        #     db.session.add(shopping_cart)
+        for shopping_cart in shopping_cart_data:
+            db.session.add(shopping_cart)
         
-        # # CartItem Seed
-        # print("Seeding Cart Items...")
-        # cart_item_data = [
-        #     CartItem(
-        #         shopping_cart_id=1,
-        #         game_id=1
-        #     )
-        # ]
+        # CartItem Seed
+        print("Seeding Cart Items...")
+        cart_item_data = [
+            CartItem(
+                shopping_cart_id=1,
+                game_id=1
+            ),
+            CartItem(
+                shopping_cart_id=1,
+                game_id=3
+            )
+        ]
         
-        # for item in cart_item_data:
-        #     db.session.add(item)
+        for item in cart_item_data:
+            db.session.add(item)
         
         db.session.commit()
         

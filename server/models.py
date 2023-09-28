@@ -16,7 +16,7 @@ class User(db.Model, SerializerMixin):
     profile_image = db.Column(db.String)
     _password_hash = db.Column(db.String, unique=True, nullable=False)
     
-    user_library = db.relationship('UserLibrary', back_populates='user')
+    library = db.relationship('UserLibrary', back_populates='user')
     user_shopping_cart = db.relationship('ShoppingCart', back_populates='user')
     
     @hybrid_property
@@ -53,8 +53,8 @@ class Game(db.Model, SerializerMixin):
     price = db.Column(db.Float, nullable=False)
     
     user_library = db.relationship('UserLibrary', back_populates='game')
-    game_platform = db.relationship('GamePlatform', back_populates='game')
-    # cart_items = db.relationship('CartItem', back_populates='game')
+    platforms = db.relationship('GamePlatform', back_populates='game')
+    cart_item = db.relationship('CartItem', back_populates='game')
     
     def __repr__(self):
         return f'id: {self.id}, \
@@ -74,7 +74,7 @@ class UserLibrary(db.Model, SerializerMixin):
     game_id = db.Column(db.Integer, ForeignKey('games.id'), nullable=False)
     
     game = db.relationship('Game', back_populates='user_library')
-    user = db.relationship('User', back_populates='user_library')
+    user = db.relationship('User', back_populates='library')
     
     def __repr__(self):
         return f'id: {self.id}, user: {self.user}, games: {self.games}'
@@ -85,7 +85,7 @@ class Platform(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     platform = db.Column(db.String, nullable=False)
     
-    game_platform = db.relationship('GamePlatform', back_populates='platform')
+    platforms = db.relationship('GamePlatform', back_populates='platform')
     
     def __repr__(self):
         return f'ID: {self.id}, \
@@ -98,8 +98,8 @@ class GamePlatform(db.Model, SerializerMixin):
     platform_id = db.Column(db.Integer, ForeignKey('platforms.id'), nullable=False)
     game_id = db.Column(db.Integer, ForeignKey('games.id'), nullable=False)
     
-    game = db.relationship('Game', back_populates='game_platform')
-    platform = db.relationship('Platform', back_populates='game_platform')
+    game = db.relationship('Game', back_populates='platforms')
+    platform = db.relationship('Platform', back_populates='platforms')
     
     def __repr__(self):
         return f'Game: {self.game} \
@@ -129,7 +129,7 @@ class CartItem(db.Model, SerializerMixin):
     game_id = db.Column(db.Integer, ForeignKey('games.id'), nullable=False)
     
     shopping_cart = db.relationship('ShoppingCart', back_populates='cart_items')
-    # game = db.relationship('Game', back_populates='cart_items')
+    game = db.relationship('Game', back_populates='cart_item')
     
     def __repr__(self):
         return f'ID: {self.id} \
