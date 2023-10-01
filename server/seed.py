@@ -36,7 +36,7 @@ if __name__ == '__main__':
                     day=25
                     ),
                 publisher="FromSoftware",
-                game_image="Image here",
+                game_image="https://static.bandainamcoent.eu/high/elden-ring/elden-ring/00-page-setup/elden-ring-new-header-mobile.jpg",
                 price=49.99
             ),
             Game(
@@ -49,7 +49,7 @@ if __name__ == '__main__':
                     day=28
                     ),
                 publisher="Mihoyo",
-                game_image="Image here",
+                game_image="https://oyster.ignimgs.com/mediawiki/apis.ign.com/genshin-impact/2/24/Key_art_EN.png?width=1600",
                 price=0.00
             ),
             Game(
@@ -62,7 +62,7 @@ if __name__ == '__main__':
                     day=22
                     ),
                 publisher="Square Enix",
-                game_image="Image here",
+                game_image="https://image.api.playstation.com/vulcan/ap/rnd/202211/3007/JnzRCl2Yj208yuJoSfoGXMGt.jpg",
                 price=69.99
             )
         ]
@@ -82,7 +82,7 @@ if __name__ == '__main__':
         ]
         
         for user in users_data:
-            user.password_hash = f'{os.urandom(8)}'
+            user.password_hash = 'password'
             db.session.add(user)
         
         # UserLibrary Seed
