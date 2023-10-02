@@ -1,0 +1,11 @@
+.nav-logo {
+  max-width: 40px;
+  max-height: auto;
+  margin-right: 6px;
+}
+
+.navbar-brand {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}

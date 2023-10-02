@@ -11,7 +11,7 @@ function Home({ user, games, setUser }) {
         <NavBar games={games} user={user} setUser={setUser}/>
         {games.map((game) => {
             return <GameCard 
-                key={uuidv4()}
+                key={game.id}
                 game={game} />
         })}
     </div>

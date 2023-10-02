@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../stylesheets/NavBar.css'
+import logo from '../media-assets/neon-controller-logo.png'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -7,6 +8,16 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function NavBar({ games, user, setUser }) {
+
+  function handleLogout() {
+    fetch('/logout', {
+      method: "DELETE"
+    }).then((r) => {
+      if (r.ok) {
+        setUser(null);
+      }
+    })
+  }
 
   function renderIfUser(user) {
     if (user) {
@@ -16,7 +27,7 @@ function NavBar({ games, user, setUser }) {
           <NavDropdown.Item href={`/users/${username}`}>Profile</NavDropdown.Item>
           <NavDropdown.Item href={`/users/${username}/library`}>Library</NavDropdown.Item>
         </NavDropdown>
-        <Nav.Link href="/logout">Logout</Nav.Link>
+        <Nav.Link href="/" onClick={handleLogout}>Logout</Nav.Link>
       </>
     } else {
       return <>
@@ -29,21 +40,19 @@ function NavBar({ games, user, setUser }) {
   return (
     <Navbar bg='dark' data-bs-theme='dark' expand="lg">
       <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand href="/">
+          <img className='nav-logo' src={logo} />
+          Re:Flex Games
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
+              {games.map((game) => {
+                const { id, title } = game
+                return <NavDropdown.Item key={id} href={`/games/${id}`}>{title}</NavDropdown.Item>
+              })}
             </NavDropdown>
             {renderIfUser(user)}
           </Nav>

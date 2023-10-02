@@ -1,4 +1,4 @@
-from flask import request, session, send_from_directory, redirect, url_for
+from flask import request, session, redirect, url_for, send_from_directory
 from flask_restful import Resource
 from flask_marshmallow import Marshmallow
 from marshmallow import fields
@@ -163,9 +163,8 @@ class CheckSession(Resource):
 
 class HomePageResource(Resource):
     def get(self):
-        # def serve_react_app():
-            # return send_from_directory('/client/public', 'index.html')
-            return '<h1>Welcome to the games store</h1>'
+        def serve_react_app():
+            return send_from_directory('/client/public', 'index.html')
 
 class GamesIndexResource(Resource):
     def get(self):
@@ -223,15 +222,15 @@ class UsersResource(Resource):
 
 # Tested
 class UserByUsernameResource(Resource):
-    def get(self, username):
-        user = User.query.filter_by(username=username).first()
-        
-        check_for_authorization_and_authentication(session, username, user)
+    def get(self):
+        user = User.query.filter(User.username==session.get('user_username')).first()
             
         if user:
             return singular_user_schema.dump(user), 200
-        else:        
-            return {"message": "401: Unauthorized"}, 401
+        else:
+            response = {"message": "401: Unauthorized"}, 401
+            response.headers['Location'] = '/login'        
+            return response
     
     def patch(self, username):
         user = User.query.filter(User.username == username).first()

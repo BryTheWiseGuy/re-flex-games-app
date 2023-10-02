@@ -9,13 +9,13 @@ function GameCarousel({ games }) {
 	return (
 		<Carousel fade>
 			{games.map((game) => {
-				const { game_image, title, description } = game
-				return (<Carousel.Item key={uuidv4()}>
-					<div class='carousel-image-container'>
-						<img class='carousel-image' src={game_image} alt='Carousel Images' />
+				const { id, game_image, title, description } = game
+				return (<Carousel.Item key={id}>
+					<div className='carousel-image-container'>
+						<img className='carousel-image' src={game_image} alt='Carousel Images' />
 					</div>
 					<Carousel.Caption>
-						<div class='bottom-carousel-banner'>
+						<div className='bottom-carousel-banner'>
 							<h3>{title}</h3>
 							<p>{description}</p>
 						</div>

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import NavBar from './NavBar';
-import '../stylesheets/LoginForm.css'
+import '../stylesheets/LoginForm.css';
 
-function Login({ setUser }) {
+function Login({ setUser, games, user }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([])
+  const [errors, setErrors] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,7 +18,9 @@ function Login({ setUser }) {
       body: JSON.stringify({ username, password}),
     }).then((res) => {
       if (res.ok) {
-        res.json().then((newUser) => setUser(newUser));
+        res.json().then((newUser) =>{
+          setUser(newUser);
+        });
       } else {
         res.json().then((err) => setErrors(err.errors))
       }
@@ -26,10 +29,7 @@ function Login({ setUser }) {
 
   return (
     <>
-      <NavBar />
-      <div className='form-background-image'>
-        <img href='https://img.freepik.com/premium-photo/abstract-neon-light-game-controller-artwork-design-digital-art-wallpaper-glowing-space-background-generative-ai_742252-10386.jpg' alt='neon-game-controller' />
-      </div>
+      <NavBar games={games} user={user}/>
       <div className='login-form-page'>
         <form className='login-form' onSubmit={handleSubmit}>
           <h1 className='form-title'>Re:Flex Games</h1>
@@ -51,13 +51,10 @@ function Login({ setUser }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}>
           </input>
-          <input type='submit' value='Login' />
-          <span class="signup-link">Don't have an account? <a href="/account_signup">Sign up!</a></span>
-          <div>
-            {errors.map((err) => {
-              return <p>{err}</p>
-            })}
-          </div>
+          <Link href={`/users/${username}`}>
+            <button id='login-button' type='submit' value='Login'>Login</button>
+          </Link>
+          <span className="signup-link">Don't have an account? <a href="/account_signup">Sign up!</a></span>
         </form>
       </div>
     </>

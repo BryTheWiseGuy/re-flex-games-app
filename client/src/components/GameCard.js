@@ -6,12 +6,12 @@ function GameCard({ game }) {
     const { id, title, description, release_date, 
         publisher, game_image, price, platforms} = game
 
-    return <div class='game-information-panel'>
-            <div class='game-image-container'>
-                <img class='game-image' src={game_image} alt={title} />
+    return <div className='game-information-panel'>
+            <div className='game-image-container'>
+                <img className='game-image' src={game_image} alt={title} />
             </div>
-        <section class='game-information'>
-            <h1 class='game-title'>{title}</h1>
+        <section className='game-information'>
+            <h1 className='game-title'>{title}</h1>
             <h2>{publisher}</h2>
             {platforms.map((platform) => {
                 return <p>{platform.platform}</p>
