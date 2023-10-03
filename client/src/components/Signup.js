@@ -20,7 +20,14 @@ function Signup({ games, user, setUser }) {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ username, email, password, confirmed_password })
+      body: JSON.stringify({ 
+        username, 
+        email, 
+        password,
+        confirmed_password,
+        about_me: "",
+        profile_image: ""
+      })
     })
     .then((res) => {
       if (res.ok) {

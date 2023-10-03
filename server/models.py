@@ -19,6 +19,18 @@ class User(db.Model, SerializerMixin):
     library = db.relationship('UserLibrary', back_populates='user')
     user_shopping_cart = db.relationship('ShoppingCart', back_populates='user')
     
+    @validates('email')
+    def validate_email(self, key, address):
+        if '@' not in address:
+            raise ValueError("Validation Failed: Please enter a valid email address")
+        return address
+    
+    @validates('about_me')
+    def validate_about_me_length(self, key, about_me):
+        if len(about_me) > 250:
+            raise ValueError("Validation Failed: About me must be shorter than 250 characters")
+        return about_me
+    
     @hybrid_property
     def password_hash(self):
         raise AttributeError

@@ -2,7 +2,6 @@ import React, { useEffect} from "react";
 import GameCarousel from "./GameCarousel";
 import GameCard from "./GameCard";
 import NavBar from "./NavBar";
-import { v4 as uuidv4 } from "uuid";
 
 function Home({ user, games, setUser }) {
   

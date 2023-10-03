@@ -21,18 +21,18 @@ function App() {
     });
   }, []);
 
-    return <div>
-      <main className="App">
-        <Router>
-          <Routes>
-            <Route path='/' element={<Home user={user} games={games} setUser={setUser} />} exact />
-            <Route path='/login' element={<Login games={games} user={user} setUser={setUser} />} exact />
-            <Route path='/account_signup' element={<Signup user={user} games={games} setUser={setUser}/>} exact />
-            <Route path='/users/:username' element={<UserProfile user={user} games={games} setUser={setUser} />} exact />
-          </Routes>
-        </Router>
-      </main>
-    </div>;
-  }
+  return <div>
+    <main className="App">
+      <Router>
+        <Routes>
+          <Route path='/' element={<Home user={user} games={games} setUser={setUser} />} exact />
+          <Route path='/login' element={<Login games={games} user={user} setUser={setUser} />} exact />
+          <Route path='/account_signup' element={<Signup user={user} games={games} setUser={setUser}/>} exact />
+          <Route path='/users/:username' element={<UserProfile user={user} games={games} setUser={setUser} />} exact />
+        </Routes>
+      </Router>
+    </main>
+  </div>;
+}
 
   export default App;

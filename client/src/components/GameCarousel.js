@@ -2,7 +2,6 @@ import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../stylesheets/GameCard.css'
-import { v4 as uuidv4 } from 'uuid'
 
 function GameCarousel({ games }) {
 
