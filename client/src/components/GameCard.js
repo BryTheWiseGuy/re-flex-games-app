@@ -14,11 +14,11 @@ function GameCard({ game }) {
             <h1 className='game-title'>{title}</h1>
             <h2>{publisher}</h2>
             {platforms.map((platform) => {
-                return <p>{platform.platform}</p>
+                return <p key={ platform.platform }>{platform.platform}</p>
             })}
-            <p>{description}</p>
-            <p>{release_date}</p>
-            <p>{price}</p>
+            <p key={ crypto.randomUUID() }>{description}</p>
+            <p key={ crypto.randomUUID() }>{release_date}</p>
+            <p key={ crypto.randomUUID() }>{price}</p>
         </section>
     </div>
 }

@@ -132,9 +132,7 @@ class UserSignUp(Resource):
         
         user = User(
             username = json_data.get('username'),
-            email = json_data.get('email'),
-            about_me = json_data.get('about_me'),
-            profile_image = json_data.get('profile_image')
+            email = json_data.get('email')
         )
         
         if json_data.get('password') == json_data.get('confirmed_password'):

@@ -4,3 +4,11 @@ html, body {
   box-sizing: border-box;
   font-family: 'Teko', sans-serif;
 }
+
+.error-text {
+  font-weight: 300;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  color: #ff0000;
+  text-align: center;
+}

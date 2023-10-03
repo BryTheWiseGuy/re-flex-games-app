@@ -12,17 +12,6 @@ function App() {
   const [platforms, setPlatforms] = useState([]);
 
   useEffect(() => {
-    fetch('/check_session').then(res => {
-      if (res.ok) {
-        res.json().then(user => 
-          setUser(user),
-          console.log(user)
-        )
-      };
-    });
-  }, []);
-
-  useEffect(() => {
     fetch('/games').then(res => {
       if (res.ok) {
         res.json().then(games =>
@@ -32,21 +21,11 @@ function App() {
     });
   }, []);
 
-  useEffect(() => {
-    fetch('/platforms').then(res => {
-      if (res.ok) {
-        res.json().then(platforms =>
-          setPlatforms(platforms),
-        )
-      }
-    })
-  }, [])
-
     return <div>
       <main className="App">
         <Router>
           <Routes>
-            <Route path='/' element={<Home user={user} games={games} platforms={platforms} setUser={setUser} />} exact />
+            <Route path='/' element={<Home user={user} games={games} setUser={setUser} />} exact />
             <Route path='/login' element={<Login games={games} user={user} setUser={setUser} />} exact />
             <Route path='/account_signup' element={<Signup user={user} games={games} setUser={setUser}/>} exact />
             <Route path='/users/:username' element={<UserProfile user={user} games={games} setUser={setUser} />} exact />

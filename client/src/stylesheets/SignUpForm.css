@@ -55,11 +55,12 @@
     animation: textGlow 2s infinite;
   }
 
-  .signup-form p {
+  .slogan {
     text-align: center;
     font-size: 22px;
     color: #fff;
   }
+
 
   @keyframes textGlow {
     0% {
@@ -135,7 +136,7 @@
     flex-direction: column;
     top: 28%;
     width: 75vw;
-    height: 65vh;
+    height: 69vh;
     padding: 10%;
     border-radius: 10px;
     background-color: #2e2e2e;
@@ -156,10 +157,18 @@
     animation: textGlow 2s infinite;
   }
 
-  .signup-form p {
+  .signup-form p.slogan {
     text-align: center;
     font-size: 22px;
     color: #fff;
+  }
+
+  .signup-form p.error-text {
+    font-weight: 300;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    color: #ff0000;
+    text-align: center;
   }
 
   @keyframes textGlow {
