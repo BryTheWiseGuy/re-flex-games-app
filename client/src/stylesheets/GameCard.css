@@ -1,21 +1,5 @@
 @media (max-width: 960px) {
 
-    .game-image-container {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .game-image {
-        max-width: 100vw;
-        height: auto;
-    }
-    
-    .game-information {
-        text-align: center;
-        border: 3px;
-        border-color: black;
-    }
-
     .carousel-image-container {
         position: relative;
         padding-top: 56.25%;
@@ -30,4 +14,24 @@
         height: 100%;
         object-fit: cover;
     }
+
+    .game-image {
+        width: 100%;
+        height: 69vw;
+        margin-top: 4px;
+    }
+
+    .game-button-clicked {
+        background-color: #008cff;
+    }
+
+    .game-button {
+        width: 100%;
+        background-color: #2f2f2f;
+        color: #fff;
+        text-align: center;
+        border: none;
+    }
+
+    
 }

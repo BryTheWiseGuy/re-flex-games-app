@@ -2,6 +2,7 @@ import React, { useEffect} from "react";
 import GameCarousel from "./GameCarousel";
 import GameCard from "./GameCard";
 import NavBar from "./NavBar";
+import '../stylesheets/HomePage.css';
 
 function Home({ user, games, setUser }) {
   
@@ -17,9 +18,11 @@ function Home({ user, games, setUser }) {
     <div>
       <GameCarousel games={games} />
       <NavBar games={games} user={user} setUser={setUser} />
+      <div className='grid-container'>
       {games.map((game) => {
-        return <GameCard key={game.id} game={game} />;
-      })}
+        return <GameCard key={game.id} game={game} />
+        })}
+      </div>
     </div>
   );
 }

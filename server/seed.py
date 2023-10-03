@@ -36,21 +36,8 @@ if __name__ == '__main__':
                     day=25
                     ),
                 publisher="FromSoftware",
-                game_image="https://static.bandainamcoent.eu/high/elden-ring/elden-ring/00-page-setup/elden-ring-new-header-mobile.jpg",
+                game_image="https://images.launchbox-app.com/fbd5b4e4-6bce-4f6c-8837-56e109c45349.jpg",
                 price=49.99
-            ),
-            Game(
-                title="Genshin Impact",
-                description="It's a good game!",
-                genre="Gacha Game",
-                release_date=datetime(
-                    year=2020,
-                    month=9,
-                    day=28
-                    ),
-                publisher="Mihoyo",
-                game_image="https://oyster.ignimgs.com/mediawiki/apis.ign.com/genshin-impact/2/24/Key_art_EN.png?width=1600",
-                price=0.00
             ),
             Game(
                 title="Final Fantasy XVI",
@@ -62,7 +49,7 @@ if __name__ == '__main__':
                     day=22
                     ),
                 publisher="Square Enix",
-                game_image="https://image.api.playstation.com/vulcan/ap/rnd/202211/3007/JnzRCl2Yj208yuJoSfoGXMGt.jpg",
+                game_image="https://cdn11.bigcommerce.com/s-6rs11v9w2d/images/stencil/1280x1280/products/2752/13555/FFXVI_Packshot_SQ-500x718_US__23623.1694706908.jpg?c=1",
                 price=69.99
             )
         ]
