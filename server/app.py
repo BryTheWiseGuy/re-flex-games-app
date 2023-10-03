@@ -1,13 +1,11 @@
 from flask import request, session, redirect, url_for, send_from_directory
-from flask_restful import Resource, reqparse
-from werkzeug.datastructures import FileStorage
+from flask_restful import Resource
 from werkzeug.utils import secure_filename
 from flask_marshmallow import Marshmallow
 from marshmallow import fields
 from sqlalchemy.exc import IntegrityError
 from config import app, db, api
 from models import User, Game, Platform, UserLibrary, ShoppingCart, CartItem, GamePlatform
-import os
 ma = Marshmallow(app)
 
 # Model Schemas
@@ -94,9 +92,6 @@ singular_cart_item_schema = Cart_Item_Schema()
 multiple_cart_item_schema = Cart_Item_Schema(many=True)
     
 # API Resources
-
-parser = reqparse.RequestParser()
-parser.add_argument('profile_image', type=FileStorage, location='files')
 
 class UserLogin(Resource):
     def post(self):
@@ -479,8 +474,6 @@ def check_for_authorization_and_authentication(session, username, user):
         return check_if_user_response
     else:
         pass
-        
-
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
