@@ -15,13 +15,11 @@ function GameCard({ game }) {
     navigate(`/games/${id}`);
   }
 
-  return <div>
-    <div>
+  return <div className='game-container'>
       <img className='game-image' src={game_image} alt={title} />
       <button 
         className={clicked ? 'game-button-clicked' : 'game-button'} 
         onClick={handleGameSelect}>{ title }</button>
-    </div>
   </div>
 }
 

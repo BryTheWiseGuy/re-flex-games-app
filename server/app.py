@@ -1,4 +1,4 @@
-from flask import request, session, redirect, url_for, send_from_directory
+from flask import request, session, jsonify, redirect, url_for, send_from_directory
 from flask_restful import Resource
 from werkzeug.utils import secure_filename
 from flask_marshmallow import Marshmallow
@@ -245,9 +245,11 @@ class UserByUsernameResource(Resource):
                 return {"message": f"400: Invalid Attribute"}, 400
         
         db.session.add(user)
-        
         db.session.commit()
-        return {"message": f"200: OK"}, 200
+        
+        user_dict = user.to_dict()
+        
+        return user_dict, 200
     
     def delete(self, username):
         user = User.query.filter(User.username == username).first()

@@ -5,8 +5,16 @@ function ProfileCard({ user, setUser }) {
   const [editedAboutMe, setEditedAboutMe] = useState("")
   const [error, setError] = useState("")
 
+  useEffect(() => {
+    fetch("/check_session").then((res) => {
+      if (res.ok) {
+        res.json().then((user) => setUser(user));
+      }
+    });
+  }, []);
+
   function handleSave(e) {
-    (e).preventDefault()
+    e.preventDefault()
     fetch(`/users/${user.username}`, {
       method: "PATCH",
       headers: {
@@ -15,24 +23,22 @@ function ProfileCard({ user, setUser }) {
       body: JSON.stringify({ about_me: editedAboutMe })
     }).then((res) => {
       if (res.ok) {
-        res.json().then((about_me) => {
+        res.json().then((updatedUser) => {
+          setUser(updatedUser)
           setIsEditing(false);
-          setEditedAboutMe(about_me);
-          setUser(user);
         })
       }
     })
   }
 
-  console.log(user)
-  
-  const { username } = user
+  if (user) {
+    const { username, profile_image, about_me } = user
 
-  return <div className='profile-card-container'>
+    return <div className='profile-card-container'>
       <div className='profile-image-container'>
-        <img alt='profile picture' />
+        <img src={profile_image} alt='profile picture' />
       </div>
-      <h1></h1>
+      <h1>{username}</h1>
       {isEditing ? (
         <div className='profile-bio-container'>
           <div className='text-area-container'>
@@ -53,11 +59,15 @@ function ProfileCard({ user, setUser }) {
         </div>
       ) : (
         <div className='profile-bio-container'>
-          <p></p>
+          <p>{about_me}</p>
           <button onClick={() => setIsEditing(true)}>Edit</button>
         </div>
       )}
     </div>
+  } else {
+    return <h1>User not logged in.</h1>
+  }
+
 }
 
 export default ProfileCard;

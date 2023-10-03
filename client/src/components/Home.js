@@ -15,7 +15,7 @@ function Home({ user, games, setUser }) {
   }, []);
 
   return (
-    <div>
+    <div className='home-page'>
       <GameCarousel games={games} />
       <NavBar games={games} user={user} setUser={setUser} />
       <div className='grid-container'>

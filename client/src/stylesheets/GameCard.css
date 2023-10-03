@@ -1,4 +1,4 @@
-@media (max-width: 960px) {
+@media (max-width: 768px) {
 
     .carousel-image-container {
         position: relative;
@@ -15,10 +15,15 @@
         object-fit: cover;
     }
 
+    .game-container {
+        margin: 0.6vw;
+    }
+
     .game-image {
-        width: 100%;
+        width: 49vw;
         height: 69vw;
-        margin-top: 4px;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
     }
 
     .game-button-clicked {
@@ -26,11 +31,18 @@
     }
 
     .game-button {
-        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        font-weight: 300;
+        letter-spacing: 0.05rem;
+        width: 49vw;
         background-color: #2f2f2f;
         color: #fff;
-        text-align: center;
         border: none;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
     }
 
     

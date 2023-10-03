@@ -22,6 +22,8 @@ function App() {
     });
   }, []);
 
+  console.log(user);
+
   return <div>
     <main className="App">
       <Router>

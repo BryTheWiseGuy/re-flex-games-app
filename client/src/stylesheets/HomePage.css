@@ -3,7 +3,14 @@
   .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(46vw, 1fr));
-    gap: 4px;
+    background-color: #3f3f3f;
+    max-height: 66vh;
+    overflow-y: auto;
+  }
+
+  .grid-container::-webkit-scrollbar {
+    width: 0;
+    display: none;
   }
 
 }

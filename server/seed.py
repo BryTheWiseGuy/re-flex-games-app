@@ -37,7 +37,7 @@ if __name__ == '__main__':
                     ),
                 publisher="FromSoftware",
                 game_image="https://images.launchbox-app.com/fbd5b4e4-6bce-4f6c-8837-56e109c45349.jpg",
-                price=49.99
+                price=69.99
             ),
             Game(
                 title="Final Fantasy XVI",
@@ -50,6 +50,32 @@ if __name__ == '__main__':
                     ),
                 publisher="Square Enix",
                 game_image="https://cdn11.bigcommerce.com/s-6rs11v9w2d/images/stencil/1280x1280/products/2752/13555/FFXVI_Packshot_SQ-500x718_US__23623.1694706908.jpg?c=1",
+                price=69.99
+            ),
+            Game(
+                title="Cyberpunk 2077",
+                description="It's an action game!",
+                genre="Action Role Playing",
+                release_date=datetime(
+                    year=2020,
+                    month=12,
+                    day=10
+                    ),
+                publisher="CD Projekt Red",
+                game_image="https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Cyberpunk_2077_box_art.jpg/220px-Cyberpunk_2077_box_art.jpg",
+                price=59.99
+            ),
+            Game(
+                title="Starfield",
+                description="It's a space game!",
+                genre="Action Adventure Space Shooter",
+                release_date=datetime(
+                    year=2023,
+                    month=9,
+                    day=6
+                    ),
+                publisher="Bethesda Game Studios",
+                game_image="https://upload.wikimedia.org/wikipedia/en/thumb/6/6d/Bethesda_Starfield.jpg/220px-Bethesda_Starfield.jpg",
                 price=69.99
             )
         ]
