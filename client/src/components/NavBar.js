@@ -38,7 +38,7 @@ function NavBar({ games, user, setUser }) {
   }
 
   return (
-    <Navbar bg='dark' data-bs-theme='dark' expand="lg">
+    <Navbar bg='dark' data-bs-theme='dark' expand="lg" sticky='top'>
       <Container>
         <Navbar.Brand href="/">
           <img className='nav-logo' src={logo} />
@@ -48,7 +48,7 @@ function NavBar({ games, user, setUser }) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+            <NavDropdown title="Games" id="basic-nav-dropdown">
               {games.map((game) => {
                 const { id, title } = game
                 return <NavDropdown.Item key={id} href={`/games/${id}`}>{title}</NavDropdown.Item>

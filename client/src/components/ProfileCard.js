@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Spinner from 'react-bootstrap/Spinner';
+import '../stylesheets/ProfilePage.css'
 
 function ProfileCard({ user, setUser }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -39,6 +41,11 @@ function ProfileCard({ user, setUser }) {
         <img src={profile_image} alt='profile picture' />
       </div>
       <h1>{username}</h1>
+      <div className='spinner-container'>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
       {isEditing ? (
         <div className='profile-bio-container'>
           <div className='text-area-container'>
@@ -57,6 +64,7 @@ function ProfileCard({ user, setUser }) {
           <button onClick={handleSave}>Save Changes</button>
           <button onClick={() => setIsEditing(false)}>Cancel</button>
         </div>
+        
       ) : (
         <div className='profile-bio-container'>
           <p>{about_me}</p>
@@ -65,7 +73,13 @@ function ProfileCard({ user, setUser }) {
       )}
     </div>
   } else {
-    return <h1>User not logged in.</h1>
+    return (
+      <div className='spinner-container'>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    )
   }
 
 }

@@ -37,6 +37,7 @@ if __name__ == '__main__':
                     ),
                 publisher="FromSoftware",
                 game_image="https://images.launchbox-app.com/fbd5b4e4-6bce-4f6c-8837-56e109c45349.jpg",
+                carousel_image='https://www.magneticmag.com/.image/t_share/MTg5MzAyODE3NjMzMDg1NDA4/thumb-1920-1151249.jpg',
                 price=69.99
             ),
             Game(
@@ -50,6 +51,7 @@ if __name__ == '__main__':
                     ),
                 publisher="Square Enix",
                 game_image="https://cdn11.bigcommerce.com/s-6rs11v9w2d/images/stencil/1280x1280/products/2752/13555/FFXVI_Packshot_SQ-500x718_US__23623.1694706908.jpg?c=1",
+                carousel_image='https://image.api.playstation.com/vulcan/ap/rnd/202211/3007/JnzRCl2Yj208yuJoSfoGXMGt.jpg',
                 price=69.99
             ),
             Game(
@@ -62,6 +64,7 @@ if __name__ == '__main__':
                     day=10
                     ),
                 publisher="CD Projekt Red",
+                carousel_image='https://images.gog-statics.com/c75e674590b8947542c809924df30bbef2190341163dd08668e243c266be70c5.jpg',
                 game_image="https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Cyberpunk_2077_box_art.jpg/220px-Cyberpunk_2077_box_art.jpg",
                 price=59.99
             ),
@@ -75,8 +78,37 @@ if __name__ == '__main__':
                     day=6
                     ),
                 publisher="Bethesda Game Studios",
+                carousel_image='https://cdn.mos.cms.futurecdn.net/ijyHy7Lc9shyoJKNSYwN6E.jpg',
                 game_image="https://upload.wikimedia.org/wikipedia/en/thumb/6/6d/Bethesda_Starfield.jpg/220px-Bethesda_Starfield.jpg",
                 price=69.99
+            ),
+            Game(
+                title="Baldur's Gate 3",
+                description="It's a D&D game!",
+                genre="Tactical RPG",
+                release_date=datetime(
+                    year=2023,
+                    month=8,
+                    day=3
+                    ),
+                publisher="Larian Studios",
+                carousel_image='https://baldursgate3.game/share-page2.jpg',
+                game_image="https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Baldur%27s_Gate_3_cover_art.jpg/220px-Baldur%27s_Gate_3_cover_art.jpg",
+                price=59.99
+            ),
+            Game(
+                title="Tears of the Kingdom",
+                description="It's a Zelda game!",
+                genre="Action Adventure",
+                release_date=datetime(
+                    year=2023,
+                    month=5,
+                    day=12
+                    ),
+                publisher="Nintendo",
+                carousel_image='https://images.alphacoders.com/127/1272163.jpg',
+                game_image="https://upload.wikimedia.org/wikipedia/en/f/fb/The_Legend_of_Zelda_Tears_of_the_Kingdom_cover.jpg",
+                price=59.99
             )
         ]
         

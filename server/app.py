@@ -36,6 +36,7 @@ class Game_Schema(ma.SQLAlchemySchema):
     release_date = ma.auto_field()
     publisher = ma.auto_field()
     game_image = ma.auto_field()
+    carousel_image = ma.auto_field()
     price = ma.auto_field()
     platforms = ma.Pluck("Game_Platform_Schema", 'platform', many=True)
     

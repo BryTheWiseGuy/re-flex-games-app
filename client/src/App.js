@@ -22,8 +22,6 @@ function App() {
     });
   }, []);
 
-  console.log(user);
-
   return <div>
     <main className="App">
       <Router>
@@ -32,7 +30,7 @@ function App() {
           <Route path='/login' element={<Login games={games} user={user} setUser={setUser} />} exact />
           <Route path='/account_signup' element={<Signup user={user} games={games} setUser={setUser}/>} exact />
           <Route path='/users/:username' element={<UserProfile user={user} games={games} setUser={setUser} />} exact />
-          <Route path='/games/:id' element={<GamePage />} exact/>
+          <Route path='/games/:id' element={<GamePage games={games} user={user} setUser={setUser}/>} exact/>
         </Routes>
       </Router>
     </main>
