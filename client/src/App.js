@@ -10,7 +10,6 @@ import GamePage from "./components/GamePage.js";
 function App() {
   const [user, setUser] = useState(null);
   const [games, setGames] = useState([]);
-  const [platforms, setPlatforms] = useState([]);
 
   useEffect(() => {
     fetch('/games').then(res => {

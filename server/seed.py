@@ -131,6 +131,9 @@ if __name__ == '__main__':
             user.password_hash = 'password'
             db.session.add(user)
         
+        db.session.commit()
+        print(users_data[0])
+        
         # UserLibrary Seed
         print("Seeding User Libraries...")
         
@@ -150,22 +153,25 @@ if __name__ == '__main__':
                 platform="PlayStation 5"
             ),
             Platform(
+                platform="PlayStation 4"
+            ),
+            Platform(
+                platform="Xbox One"
+            ),
+            Platform(
                 platform="Xbox Series S"
             ),
             Platform(
                 platform="Xbox Series X"
             ),
             Platform(
+                platform="Microsoft Windows PC"
+            ),
+            Platform(
                 platform="Nintendo Switch"
             ),
             Platform(
                 platform="MacOS"
-            ),
-            Platform(
-                platform="Microsoft Windows PC"
-            ),
-            Platform(
-                platform="PlayStation 4"
             )
         ]
         
@@ -179,6 +185,22 @@ if __name__ == '__main__':
             GamePlatform(
                 game_id=1,
                 platform_id=1
+            ),
+            GamePlatform(
+                game_id=1,
+                platform_id=2
+            ),
+            GamePlatform(
+                game_id=1,
+                platform_id=3
+            ),
+            GamePlatform(
+                game_id=1,
+                platform_id=4
+            ),
+            GamePlatform(
+                game_id=1,
+                platform_id=5
             ),
             GamePlatform(
                 game_id=1,

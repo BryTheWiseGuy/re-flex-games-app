@@ -133,7 +133,7 @@ class UserSignUp(Resource):
         
         user = User(
             username = json_data.get('username'),
-            email = json_data.get('email')
+            email = json_data.get('email'),
         )
         
         if json_data.get('password') == json_data.get('confirmed_password'):
@@ -147,6 +147,11 @@ class UserSignUp(Resource):
         try:
             db.session.commit()
             session['user_username'] = user.username
+            user_shopping_cart = ShoppingCart(user_id=user.id)
+            library = UserLibrary(user_id=user.id)
+            db.session.add(user_shopping_cart)
+            db.session.add(library)
+            db.session.commit()
             return singular_user_schema.dump(user), 201
         except IntegrityError as e:
             db.session.rollback()

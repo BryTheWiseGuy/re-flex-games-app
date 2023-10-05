@@ -59,7 +59,7 @@ class Game(db.Model, SerializerMixin):
     title = db.Column(db.String, unique=True, nullable=False)
     description = db.Column(db.String, nullable=False)
     genre = db.Column(db.String, nullable=False)
-    release_date = db.Column(db.DateTime, nullable=False)
+    release_date = db.Column(db.Date, nullable=False)
     publisher = db.Column(db.String, nullable=False)
     game_image = db.Column(db.String, nullable=False)
     carousel_image = db.Column(db.String)

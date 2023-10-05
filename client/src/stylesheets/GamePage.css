@@ -8,36 +8,97 @@
   .game-page-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     width: 100vw;
     height: 100%;
+    background-color: #272c33;
   }
 
-  .game-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: #282828;
-    height: 100%;
-    width: 100vw;
+  .game-information {
+    margin-left: 6vw;
     color: #fff;
   }
 
-  .game-card p {
-    margin: 6vw;
-    font-size: 24px;
-    text-align: center;
+  .game-details {
+    width: auto;;
+  }
+
+   .genre-publisher {
+    display: flex;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 35px;
+    line-height: 0;
+    font-weight: 300;
+  }
+
+  .genre p {
+    margin-right: 20vw;
+  }
+
+  .platform-release-date {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    font-size: 16px;
+    margin-top: 35px;
+    line-height: 0;
+    font-weight: 300;
+  }
+
+  .release-date {
+    margin-bottom: 4vh;
+  }
+
+  .platforms {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 83vw;
+    margin-top: 8px;
+    margin-bottom: 2vh;
+  }
+
+  .game-description {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    font-weight: 300;
+    width: 75vw;
+    color: #fff;
   }
 
   .game-title-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 5vh;
-    margin: 0;
+    font-size: 22px;
+    width: 70vw;
+    height: 2vh;
+    margin-left: 6vw;
+    margin-top: 3vh;
+    margin-bottom: 2vh;
     color: #fff;
-    background: linear-gradient(to right, #171717, #2e2e2e);
+  }
+
+  .video-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .video-container iframe {
+    margin: 0;
+  }
+
+  .purchase-button {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    width: 100vw;
+    font-weight: 500;
+    letter-spacing: 1px;
+    height: 6vh;
+    font-size: 28px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
   }
 
 }
