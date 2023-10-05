@@ -90,7 +90,7 @@ function Signup({ games, user, setUser }) {
           </input>
           <label className='form-label' htmlFor='password'>Password </label>
           <input 
-            type='text'
+            type='password'
             id='password'
             placeholder='Password'
             autoComplete='off'
@@ -100,7 +100,7 @@ function Signup({ games, user, setUser }) {
           </input>
           <label className='form-label' htmlFor='password_confirm'>Confirm Password </label>
           <input 
-            type='text'
+            type='password'
             id='password_confirm'
             placeholder='Confirm Password'
             autoComplete='off'

@@ -1,8 +1,6 @@
-from flask import request, session, jsonify, redirect, url_for, send_from_directory
+from flask import request, session, redirect, url_for, send_from_directory
 from flask_restful import Resource
-from werkzeug.utils import secure_filename
 from flask_marshmallow import Marshmallow
-from marshmallow import fields
 from sqlalchemy.exc import IntegrityError
 from config import app, db, api
 from models import User, Game, Platform, UserLibrary, ShoppingCart, CartItem, GamePlatform

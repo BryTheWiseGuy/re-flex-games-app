@@ -59,7 +59,7 @@ function Login({ games, user, setUser }) {
             Password:{" "}
           </label>
           <input
-            type="text"
+            type="password"
             id="password"
             placeholder="Enter password"
             autoComplete="current-password"

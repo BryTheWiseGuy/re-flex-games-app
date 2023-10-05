@@ -7,8 +7,9 @@
     position: relative;
     height: 92vh;
     width: 100vw;
-    background-image: url('../media-assets/neon-controller.jpg');
+    background-image: url('../media-assets/neon-controller-logo.png');
     background-size: cover;
+    background-position: center;
   }
 
   .login-form {
@@ -79,11 +80,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    height: 92vh;
+    height: 92.55vh;
     width: 100vw;
-    background-image: url('../media-assets/neon-controller.jpg');
+    background-image: url('../media-assets/neon-controller-logo.png');
     background-size: cover;
+    background-position: center;
   }
 
   .login-form {

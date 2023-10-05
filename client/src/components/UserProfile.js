@@ -20,12 +20,12 @@ function UserProfile({ user, games, setUser }) {
     });
   }, []);
 
-  return <>
+  return <div className='profile-page-container'>
     <Navbar user={user} games={games} setUser={setUser}/>
     <div className='profile-page'>
       <ProfileCard user={user} setUser={setUser} />
     </div>
-  </>
+  </div>
 };
 
 export default UserProfile;
