@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import GameCarousel from "./GameCarousel";
 import GameCard from "./GameCard";
 import NavBar from "./NavBar";

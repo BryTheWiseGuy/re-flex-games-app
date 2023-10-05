@@ -7,8 +7,7 @@ function GameCard({ game }) {
   const navigate = useNavigate();
   const [clicked, setClicked] = useState(false)
 
-  const { id, title, description, release_date,
-    publisher, game_image, price, platforms } = game
+  const { id, title, game_image } = game
 
   const handleGameSelect = () => {
     setClicked(!clicked)
@@ -16,7 +15,7 @@ function GameCard({ game }) {
   }
 
   return <div className='game-container'>
-      <img className='game-image' src={game_image} alt={title} />
+      <img onClick={() => navigate(`/games/${id}`)} className='game-image' src={game_image} alt={title} />
       <button 
         className={clicked ? 'game-button-clicked' : 'game-button'} 
         onClick={handleGameSelect}>{ title }</button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../stylesheets/NavBar.css'
 import logo from '../media-assets/neon-controller-logo.png'
 import Container from 'react-bootstrap/Container';

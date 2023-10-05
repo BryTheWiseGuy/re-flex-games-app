@@ -28,7 +28,7 @@ if __name__ == '__main__':
         games_data=[
             Game(
                 title="Elden Ring",
-                description="It's a good game!",
+                description="THE NEW FANTASY ACTION RPG. Rise, Tarnished, and be guided by grace to brandish the power of the Elden Ring and become an Elden Lord in the Lands Between.",
                 genre="Action Role-Playing",
                 release_date=datetime(
                     year=2022,
@@ -38,6 +38,7 @@ if __name__ == '__main__':
                 publisher="FromSoftware",
                 game_image="https://images.launchbox-app.com/fbd5b4e4-6bce-4f6c-8837-56e109c45349.jpg",
                 carousel_image='https://www.magneticmag.com/.image/t_share/MTg5MzAyODE3NjMzMDg1NDA4/thumb-1920-1151249.jpg',
+                game_trailer='https://www.youtube.com/embed/qqiC88f9ogU',
                 price=69.99
             ),
             Game(

@@ -63,6 +63,7 @@ class Game(db.Model, SerializerMixin):
     publisher = db.Column(db.String, nullable=False)
     game_image = db.Column(db.String, nullable=False)
     carousel_image = db.Column(db.String)
+    game_trailer = db.Column(db.String)
     price = db.Column(db.Float, nullable=False)
     
     user_library = db.relationship('UserLibrary', back_populates='game')

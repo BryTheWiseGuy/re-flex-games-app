@@ -62,9 +62,9 @@ function ProfileCard({ user, setUser }) {
       {isAddingImage ? (
         <div className='profile-image-container'>
           {profileImage ? (
-            <img src='https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png' alt='profile picture placeholder' />
-          ) : (
-            <img src={profile_image} alt='profile picture' />
+              <img src={profile_image} alt='profile picture' />
+            ) : (
+              <img src='https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png' alt='profile picture placeholder' />
           )}
           <input
             className='text-input'
@@ -74,7 +74,7 @@ function ProfileCard({ user, setUser }) {
           <Button variant='info' className='save-button' onClick={handleSaveProfileImage}>Save</Button>
           <Button className='cancel-button' onClick={() => setIsAddingImage(false)}>Cancel</Button>
         </div>
-      ): (
+      ) : (
         <div className='profile-image-container'>
           {profile_image ? (
             <img src={profile_image} alt='profile picture' />

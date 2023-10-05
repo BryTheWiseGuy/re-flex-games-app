@@ -39,7 +39,7 @@ function Login({ games, user, setUser }) {
   };
 
   return (
-    <>
+    <div className='login-container'>
       <NavBar games={games} user={user} />
       <div className="login-form-page">
         <form className="login-form" onSubmit={handleSubmit}>
@@ -75,7 +75,7 @@ function Login({ games, user, setUser }) {
           </span>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 
