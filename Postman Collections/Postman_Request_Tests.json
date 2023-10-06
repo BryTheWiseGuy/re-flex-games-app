@@ -122,6 +122,18 @@
 						"url": "http://127.0.0.1:5555/users/gamergirl22"
 					},
 					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "cad5ff4e-9041-4fb9-a932-2d2a215c66b1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"id": "ea3b9ee6-31e2-401b-bc2f-9b9da0325df1"
@@ -328,6 +340,18 @@
 							}
 						},
 						"url": "http://127.0.0.1:5555/users/gamergirl22/shopping_cart/items"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "e2e23b85-7d03-4346-9082-56980b1ce794",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
