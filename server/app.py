@@ -77,7 +77,7 @@ class Shopping_Cart_Schema(ma.SQLAlchemySchema):
         model = ShoppingCart
     
     id = ma.auto_field()
-    cart_items = ma.Pluck("Cart_Item_Schema", "game", many=True)
+    cart_items = ma.Nested("Cart_Item_Schema", many=True)
 
 shopping_Cart_Schema = Shopping_Cart_Schema()
 
@@ -86,6 +86,7 @@ class Cart_Item_Schema(ma.SQLAlchemySchema):
         model = CartItem
     
     id = ma.auto_field()
+    shopping_cart_id = ma.auto_field()
     game = ma.Nested(singular_game_schema)
 
 singular_cart_item_schema = Cart_Item_Schema()
@@ -356,26 +357,8 @@ class UserShoppingCartResource(Resource):
             return {"message": "401: Unauthorized"}, 401
 
 # Tested
-class DeleteShoppingCartItem(Resource):  
-    def delete(self, username, id):
-        user = User.query.filter(User.username == username).first()
-        
-        check_for_authorization_and_authentication(session, username, user)
-        
-        if user:
-            cart_item = CartItem.query.filter(CartItem.id == id).first()
-            
-            if cart_item:
-                db.session.delete(cart_item)
-                db.session.commit()
-                return {"message": "200: OK"}, 200
-            else:
-                return {"message": "404: Item Not Found"}, 404
-        else:
-            return {"message": "404: User Not Found"}, 404
-
-# Tested
 class UserCartItemsResource(Resource):
+
     def post(self, username):
         user = User.query.filter(User.username == username).first()
         
@@ -424,6 +407,24 @@ class UserCartItemsResource(Resource):
         db.session.commit()
         
         return {"message": "200: OK"}, 200
+    
+@app.route('/checkout/<int:cart_id>')
+def checkout(cart_id):
+    shopping_cart = ShoppingCart.query.filter(ShoppingCart.id == cart_id).first()
+    shopping_cart_items = shopping_cart.cart_items
+    
+    for item in shopping_cart_items:
+        user_library_entry = UserLibrary(user_id = shopping_cart.user_id, game_id = item.game_id)
+        db.session.add(user_library_entry)
+        
+        db.session.delete(item)
+        db.session.commit()
+    
+    user = User.query.filter(User.id == shopping_cart.user_id).first()
+    
+    return singular_user_schema.dump(user), 200
+            
+    
 
 # API Endpoints
 
@@ -438,7 +439,6 @@ api.add_resource(UserLibraryByUsernameResource, '/users/<username>/library')
 api.add_resource(DeleteUserLibraryEntry, '/users/<username>/library/<int:id>')
 api.add_resource(UserShoppingCartResource, '/users/<username>/shopping_cart')
 api.add_resource(UserCartItemsResource, '/users/<username>/shopping_cart/items')
-api.add_resource(DeleteShoppingCartItem, '/users/<username>/shopping_cart/<int:id>')
 api.add_resource(GamesIndexResource, '/games', endpoint='games')
 api.add_resource(GameByIDResource, '/games/<int:id>')
 api.add_resource(GamePlatformsResource, '/platforms', endpoint='platforms')

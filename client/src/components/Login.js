@@ -5,7 +5,6 @@ import "../stylesheets/LoginForm.css";
 function Login({ setUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // Set state for error and use to conditionally render message beneath password element
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -22,23 +21,25 @@ function Login({ setUser }) {
       if (res.ok) {
         res.json().then((user) => {
           setUser(user);
+          console.log("just logged in", user)
           navigate(`/users/${user.username}`);
         });
       } else {
-        return res.json()
-        .then(() => {
-          setError("Error: Please enter a valid username and password.")
-        })
-        .catch((error) => {
-          console.log("Network error:", error);
-          alert("Network Error. Please try again later.");
-        });
+        return res
+          .json()
+          .then(() => {
+            setError("Error: Please enter a valid username and password.");
+          })
+          .catch((error) => {
+            console.log("Network error:", error);
+            alert("Network Error. Please try again later.");
+          });
       }
     });
   };
 
   return (
-    <div className='login-container'>
+    <div className="login-container">
       <div className="login-form-page">
         <form className="login-form" onSubmit={handleSubmit}>
           <h1 className="form-title">Re:Flex Games</h1>
@@ -48,7 +49,7 @@ function Login({ setUser }) {
           <input
             type="text"
             id="username"
-            placeholder="Enter username"
+            placeholder="Username"
             autoComplete="off"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -59,7 +60,7 @@ function Login({ setUser }) {
           <input
             type="password"
             id="password"
-            placeholder="Enter password"
+            placeholder="Password"
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

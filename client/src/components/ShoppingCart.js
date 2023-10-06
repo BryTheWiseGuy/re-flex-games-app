@@ -19,22 +19,32 @@ function ShoppingCartPage({ user, setUser }) {
   function calculateTotal(shoppingCart) {
     let totalPrice = 0;
     if (shoppingCart) {
-      shoppingCart[0].forEach((item) => {
-        totalPrice += item.price;
+      shoppingCart.forEach((item) => {
+        totalPrice += item.game.price;
       });
     }
     return totalPrice;
   }
-
+  
   if (user) {
     const { user_shopping_cart } = user
+
+    function handlePurchase(e) {
+      e.preventDefault()
+      fetch(`/checkout/${user_shopping_cart[0][0].shopping_cart_id}`)
+        .then((res) => res.json())
+        .then((updatedUser) => {
+          setUser(updatedUser)
+          console.log(user)
+        })
+    }
 
     return (
       <section className="shopping-cart-page">
         <div className="shopping-cart-container">
           {user_shopping_cart
             ? user_shopping_cart[0].map((game) => {
-                const { id, title, game_image, price } = game;
+                const { id, title, game_image, price } = game.game;
 
                 function handleDelete(e) {
                   e.preventDefault()
@@ -71,11 +81,11 @@ function ShoppingCartPage({ user, setUser }) {
                   </div>
                 );
               })
-            : null}
+            : null }
         </div>
         <div className="sticky-bottom">
-          <Button variant="danger" className="checkout-button">
-            Complete Purchase: {calculateTotal(user_shopping_cart)}
+          <Button variant="danger" className="checkout-button" onClick={handlePurchase}>
+            Complete Purchase: {calculateTotal(user_shopping_cart[0])}
           </Button>
         </div>
       </section>
