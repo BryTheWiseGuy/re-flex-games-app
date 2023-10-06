@@ -55,8 +55,8 @@ function ProfileCard({ user, setUser }) {
   }
 
   if (user) {
-    const { username, profile_image, about_me } = user
-
+    const { username, profile_image, about_me, user_shopping_cart } = user
+    console.log(user_shopping_cart)
     return <div className='profile-card-container'>
       <h1 className='username'>{username}</h1>
       {isAddingImage ? (

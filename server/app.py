@@ -143,19 +143,19 @@ class UserSignUp(Resource):
                     "message": "Passwords Do Not Match"}  
 
         db.session.add(user)
+        db.session.commit()
         
-        try:
-            db.session.commit()
-            session['user_username'] = user.username
-            user_shopping_cart = ShoppingCart(user_id=user.id)
-            library = UserLibrary(user_id=user.id)
-            db.session.add(user_shopping_cart)
-            db.session.add(library)
-            db.session.commit()
-            return singular_user_schema.dump(user), 201
-        except IntegrityError as e:
-            db.session.rollback()
-            return {"message": "422: Unprocessable Entity"}, 422
+        user_shopping_cart = ShoppingCart(user_id=user.id)
+        library = UserLibrary(user_id=user.id)
+        
+        db.session.add(user_shopping_cart)
+        db.session.add(library)
+        
+        db.session.commit()
+        
+        session['user_username'] = user.username
+        
+        return singular_user_schema.dump(user), 201
 
 class CheckSession(Resource):
     def get(self):

@@ -18,27 +18,20 @@
     color: #fff;
   }
 
-  .game-details {
-    width: auto;;
-  }
-
    .genre-publisher {
-    display: flex;
-    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+    width: 95%;
     font-size: 16px;
     margin-top: 35px;
-    line-height: 0;
     font-weight: 300;
-  }
-
-  .genre p {
-    margin-right: 20vw;
+    line-height: 0;
   }
 
   .platform-release-date {
     display: flex;
     flex-direction: column;
-    width: auto;
+    width: 100%;
     font-size: 16px;
     margin-top: 35px;
     line-height: 0;
@@ -52,8 +45,7 @@
   .platforms {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    width: 83vw;
-    margin-top: 8px;
+    width: 95%;
     margin-bottom: 2vh;
   }
 

@@ -85,7 +85,7 @@ class UserLibrary(db.Model, SerializerMixin):
     
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, ForeignKey('users.id'), nullable=False)
-    game_id = db.Column(db.Integer, ForeignKey('games.id'), nullable=False)
+    game_id = db.Column(db.Integer, ForeignKey('games.id'))
     
     game = db.relationship('Game', back_populates='user_library')
     user = db.relationship('User', back_populates='library')

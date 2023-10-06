@@ -43,7 +43,7 @@ if __name__ == '__main__':
             ),
             Game(
                 title="Final Fantasy XVI",
-                description="It's a fantasy game!",
+                description="An epic dark fantasy world where the fate of the land is decided by the mighty Eikons and the Dominants who wield them. This is the tale of Clive Rosfield, a warrior granted the title “First Shield of Rosaria” and sworn to protect his younger brother Joshua, the dominant of the Phoenix. Before long, Clive will be caught up in a great tragedy and swear revenge on the Dark Eikon Ifrit, a mysterious entity that brings calamity in its wake.",
                 genre="Action Role Playing",
                 release_date=datetime(
                     year=2023,
@@ -53,11 +53,12 @@ if __name__ == '__main__':
                 publisher="Square Enix",
                 game_image="https://cdn11.bigcommerce.com/s-6rs11v9w2d/images/stencil/1280x1280/products/2752/13555/FFXVI_Packshot_SQ-500x718_US__23623.1694706908.jpg?c=1",
                 carousel_image='https://image.api.playstation.com/vulcan/ap/rnd/202211/3007/JnzRCl2Yj208yuJoSfoGXMGt.jpg',
+                game_trailer='https://www.youtube.com/embed/ofWtkPs92Nc?si=IcaBMt5oVDPZqWaV',
                 price=69.99
             ),
             Game(
                 title="Cyberpunk 2077",
-                description="It's an action game!",
+                description="Cyberpunk 2077 is an open-world, action-adventure RPG set in the megalopolis of Night City, where you play as a cyberpunk mercenary wrapped-up in a do-or-die fight for survival. Explore the dark future, now upgraded with next-gen in mind and featuring free additional content!",
                 genre="Action Role Playing",
                 release_date=datetime(
                     year=2020,
@@ -67,12 +68,13 @@ if __name__ == '__main__':
                 publisher="CD Projekt Red",
                 carousel_image='https://images.gog-statics.com/c75e674590b8947542c809924df30bbef2190341163dd08668e243c266be70c5.jpg',
                 game_image="https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Cyberpunk_2077_box_art.jpg/220px-Cyberpunk_2077_box_art.jpg",
+                game_trailer='https://www.youtube.com/embed/nLhWWoAaZ0Q?si=yZQT87BLdxeapbF1',
                 price=59.99
             ),
             Game(
                 title="Starfield",
-                description="It's a space game!",
-                genre="Action Adventure Space Shooter",
+                description="In this next generation role-playing game set amongst the stars, create any character you want and explore with unparalleled freedom as you embark on an epic journey to answer humanity's greatest mystery.\nIn the year 2330, humanity has ventured beyond our solar system, settling new planets, and living as a spacefaring people. You will join Constellation - the last group of space explorers seeking rare artifacts throughout the galaxy - and navigate the vast expanse of space in Bethesda Game Studios' biggest and most ambitious game.",
+                genre="Action Adventure",
                 release_date=datetime(
                     year=2023,
                     month=9,
@@ -81,11 +83,12 @@ if __name__ == '__main__':
                 publisher="Bethesda Game Studios",
                 carousel_image='https://cdn.mos.cms.futurecdn.net/ijyHy7Lc9shyoJKNSYwN6E.jpg',
                 game_image="https://upload.wikimedia.org/wikipedia/en/thumb/6/6d/Bethesda_Starfield.jpg/220px-Bethesda_Starfield.jpg",
+                game_trailer='https://www.youtube.com/embed/RDEU8SOtHAI?si=LxBYhvPkd_0uBBrO',
                 price=69.99
             ),
             Game(
                 title="Baldur's Gate 3",
-                description="It's a D&D game!",
+                description="Gather your party and return to the Forgotten Realms in a tale of fellowship and betrayal, sacrifice and survival, and the lure of absolute power.\nMysterious abilities are awakening inside you, drawn from a mind flayer parasite planted in your brain. Resist, and turn darkness against itself. Or embrace corruption, and become ultimate evil.\nFrom the creators of Divinity: Original Sin 2 comes a next-generation RPG, set in the world of Dungeons & Dragons.",
                 genre="Tactical RPG",
                 release_date=datetime(
                     year=2023,
@@ -95,6 +98,7 @@ if __name__ == '__main__':
                 publisher="Larian Studios",
                 carousel_image='https://baldursgate3.game/share-page2.jpg',
                 game_image="https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Baldur%27s_Gate_3_cover_art.jpg/220px-Baldur%27s_Gate_3_cover_art.jpg",
+                game_trailer='https://www.youtube.com/embed/XuCfkgaaa08?si=pUpp2IimPY0oirxa',
                 price=59.99
             ),
             Game(
@@ -109,6 +113,7 @@ if __name__ == '__main__':
                 publisher="Nintendo",
                 carousel_image='https://images.alphacoders.com/127/1272163.jpg',
                 game_image="https://upload.wikimedia.org/wikipedia/en/f/fb/The_Legend_of_Zelda_Tears_of_the_Kingdom_cover.jpg",
+                game_trailer='https://www.youtube.com/embed/SSVYVgm4tH4?si=AfSROHeX0TLU_CYE',
                 price=59.99
             )
         ]
@@ -212,15 +217,80 @@ if __name__ == '__main__':
             ),
             GamePlatform(
                 game_id=2,
-                platform_id=6
+                platform_id=2
             ),
             GamePlatform(
                 game_id=3,
                 platform_id=1
-            ),GamePlatform(
+            ),
+            GamePlatform(
                 game_id=3,
                 platform_id=2
-            )
+            ),
+            GamePlatform(
+                game_id=3,
+                platform_id=3
+            ),
+            GamePlatform(
+                game_id=3,
+                platform_id=4
+            ),
+            GamePlatform(
+                game_id=3,
+                platform_id=5
+            ),
+            GamePlatform(
+                game_id=3,
+                platform_id=6
+            ),
+            GamePlatform(
+                game_id=4,
+                platform_id=1
+            ),
+            GamePlatform(
+                game_id=4,
+                platform_id=2
+            ),
+            GamePlatform(
+                game_id=4,
+                platform_id=3
+            ),
+            GamePlatform(
+                game_id=4,
+                platform_id=4
+            ),
+            GamePlatform(
+                game_id=4,
+                platform_id=5
+            ),
+            GamePlatform(
+                game_id=4,
+                platform_id=6
+            ),
+            GamePlatform(
+                game_id=5,
+                platform_id=1
+            ),
+            GamePlatform(
+                game_id=5,
+                platform_id=4
+            ),
+            GamePlatform(
+                game_id=5,
+                platform_id=5
+            ),
+            GamePlatform(
+                game_id=5,
+                platform_id=6
+            ),
+            GamePlatform(
+                game_id=5,
+                platform_id=8
+            ),
+            GamePlatform(
+                game_id=6,
+                platform_id=7
+            ),
         ]
         
         for game_platform in game_platform_data:

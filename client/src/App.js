@@ -4,6 +4,7 @@ import Home from './components/Home.js';
 import Login from './components/Login.js';
 import Signup from './components/Signup.js'
 import UserProfile from './components/UserProfile.js';
+import ShoppingCart from './components/ShoppingCart.js';
 import './stylesheets/App.css';
 import GamePage from "./components/GamePage.js";
 
@@ -30,6 +31,7 @@ function App() {
           <Route path='/account_signup' element={<Signup user={user} games={games} setUser={setUser}/>} exact />
           <Route path='/users/:username' element={<UserProfile user={user} games={games} setUser={setUser} />} exact />
           <Route path='/games/:id' element={<GamePage games={games} user={user} setUser={setUser}/>} exact/>
+          <Route path='/users/:username/shopping_cart' element={<ShoppingCart />} exact/>
         </Routes>
       </Router>
     </main>

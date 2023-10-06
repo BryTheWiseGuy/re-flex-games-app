@@ -21,11 +21,13 @@ function NavBar({ games, user, setUser }) {
 
   function renderIfUser(user) {
     if (user) {
-      const { username } = user
+      const { username, user_shopping_cart } = user
+
       return <>
         <NavDropdown title={`${username}`}>
           <NavDropdown.Item href={`/users/${username}`}>Profile</NavDropdown.Item>
           <NavDropdown.Item href={`/users/${username}/library`}>Library</NavDropdown.Item>
+          <NavDropdown.Item href={`/users/${username}/shopping_cart`}>Shopping Cart - {user_shopping_cart[0].length}</NavDropdown.Item>
         </NavDropdown>
         <Nav.Link href="/" onClick={handleLogout}>Logout</Nav.Link>
       </>
