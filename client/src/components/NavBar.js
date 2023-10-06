@@ -27,7 +27,7 @@ function NavBar({ games, user, setUser }) {
         <NavDropdown title={`${username}`}>
           <NavDropdown.Item href={`/users/${username}`}>Profile</NavDropdown.Item>
           <NavDropdown.Item href={`/users/${username}/library`}>Library</NavDropdown.Item>
-          <NavDropdown.Item href={`/users/${username}/shopping_cart`}>Shopping Cart - {user_shopping_cart[0].length}</NavDropdown.Item>
+          <NavDropdown.Item href={`/users/${username}/shopping_cart`}>Shopping Cart</NavDropdown.Item>
         </NavDropdown>
         <Nav.Link href="/" onClick={handleLogout}>Logout</Nav.Link>
       </>

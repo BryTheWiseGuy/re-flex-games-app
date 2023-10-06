@@ -44,8 +44,12 @@ function ShoppingCartPage({ user, setUser }) {
                       'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({ game_id: id })
-                  })
-                }
+                  }).then(() => {
+                    setUser((prevUser) => ({
+                      ...prevUser,
+                      user_shopping_cart: [prevUser.user_shopping_cart[0].filter((item) => item.id !== id)],
+                    }));
+                })};
 
                 return (
                   <div className="cart-item-container">
