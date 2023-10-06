@@ -124,7 +124,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Login User",
 					"id": "cad5ff4e-9041-4fb9-a932-2d2a215c66b1",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -304,7 +304,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Purchase Request",
 					"id": "c8409cde-9ff9-47be-b5da-86406f8d5996",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
