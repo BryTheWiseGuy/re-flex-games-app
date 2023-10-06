@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import Navbar from '../components/NavBar.js'
 import ProfileCard from '../components/ProfileCard.js';
 import { useNavigate } from 'react-router-dom';
 import '../stylesheets/ProfilePage.css';
 
-function UserProfile({ user, games, setUser }) {
+function UserProfile({ user, setUser }) {
 
   const navigate = useNavigate()
 
@@ -21,7 +20,6 @@ function UserProfile({ user, games, setUser }) {
   }, []);
 
   return <div className='profile-page-container'>
-    <Navbar user={user} games={games} setUser={setUser}/>
     <div className='profile-page'>
       <ProfileCard user={user} setUser={setUser} />
     </div>

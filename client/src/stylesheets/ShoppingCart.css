@@ -1,0 +1,61 @@
+.shopping-cart-page {
+  display: flex;
+  flex-direction: column;
+  max-height: 92.3vh;
+  background-image: url('../media-assets/neon-controller-logo.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.shopping-cart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3vh;
+  height: 100vh;
+}
+
+.cart-item-container {
+  display: flex;
+  width: 90vw;
+  margin-bottom: 12px;
+  padding: 8px;
+}
+
+.shopping-cart-image {
+  width: 20vw;
+  height: auto;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+.button-details-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: #2e2e2e;
+  color: #fff;
+}
+
+.remove-button {
+  height: 4vh;
+  width: 100%;
+  align-self: flex-end;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.checkout-button {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  width: 100vw;
+  font-weight: 500;
+  letter-spacing: 1px;
+  height: 8vh;
+  font-size: 36px;
+  text-align: center;
+}

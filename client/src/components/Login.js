@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from "./NavBar";
 import "../stylesheets/LoginForm.css";
 
-function Login({ games, user, setUser }) {
+function Login({ setUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   // Set state for error and use to conditionally render message beneath password element
@@ -40,7 +39,6 @@ function Login({ games, user, setUser }) {
 
   return (
     <div className='login-container'>
-      <NavBar games={games} user={user} />
       <div className="login-form-page">
         <form className="login-form" onSubmit={handleSubmit}>
           <h1 className="form-title">Re:Flex Games</h1>

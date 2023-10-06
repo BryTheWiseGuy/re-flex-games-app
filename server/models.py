@@ -1,12 +1,11 @@
-from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy import ForeignKey, CheckConstraint
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import validates
 from datetime import datetime
 
 from config import db, bcrypt
 
-class User(db.Model, SerializerMixin):
+class User(db.Model):
     __tablename__ = 'users'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -52,7 +51,7 @@ class User(db.Model, SerializerMixin):
                 about_me: {self.about_me}, \
                 profile_image: {self.profile_image}'
 
-class Game(db.Model, SerializerMixin):
+class Game(db.Model):
     __tablename__ = 'games'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -80,7 +79,7 @@ class Game(db.Model, SerializerMixin):
                 game_image: {self.game_image}, \
                 price: {self.price}'
 
-class UserLibrary(db.Model, SerializerMixin):
+class UserLibrary(db.Model):
     __tablename__ = 'user_library'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -93,7 +92,7 @@ class UserLibrary(db.Model, SerializerMixin):
     def __repr__(self):
         return f'id: {self.id}, user: {self.user}, games: {self.games}'
     
-class Platform(db.Model, SerializerMixin):
+class Platform(db.Model):
     __tablename__ = 'platforms'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -105,7 +104,7 @@ class Platform(db.Model, SerializerMixin):
         return f'ID: {self.id}, \
                 Platform: {self.platform}'
     
-class GamePlatform(db.Model, SerializerMixin):
+class GamePlatform(db.Model):
     __tablename__ = 'game_platform'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -119,7 +118,7 @@ class GamePlatform(db.Model, SerializerMixin):
         return f'Game: {self.game} \
                 Platform: {self.platform}'
     
-class ShoppingCart(db.Model, SerializerMixin):
+class ShoppingCart(db.Model):
     __tablename__ = 'shopping_cart'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -135,7 +134,7 @@ class ShoppingCart(db.Model, SerializerMixin):
                 User: {self.user} \
                 Items: {self.cart_items}'
 
-class CartItem(db.Model, SerializerMixin):
+class CartItem(db.Model):
     __tablename__ = 'cart_items'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -149,11 +148,3 @@ class CartItem(db.Model, SerializerMixin):
         return f'ID: {self.id} \
                 Shopping Cart: {self.shopping_cart} \
                 Game: {self.game}'
-
-# # Stretch Goal Models
-
-# class Order(db.Model, SerializerMixin):
-#     pass
-
-# class Review(db.Model, SerializerMixin):
-    # pass

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "./NavBar.js";
 import { useParams, useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/esm/Spinner";
 import Ratio from "react-bootstrap/Ratio";
 import Button from "react-bootstrap/Button";
 import "../stylesheets/GamePage.css";
 
-function GamePage({ games, user, setUser }) {
+function GamePage({ user, setUser }) {
   const [purchased, setPurchased] = useState(false);
   const [game, setGame] = useState({});
   const { id } = useParams();
@@ -64,7 +63,6 @@ function GamePage({ games, user, setUser }) {
 
     return (
       <div className="game-page-container">
-        <NavBar games={games} user={user} setUser={setUser} />
         <img className="banner-image" src={carousel_image} alt={title} />
         <h1 className="game-title-header">{title}</h1>
         <section className="game-information">

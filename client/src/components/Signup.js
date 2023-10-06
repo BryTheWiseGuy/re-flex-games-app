@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavBar from './NavBar.js';
 import '../stylesheets/App.css';
 import '../stylesheets/SignUpForm.css';
 
-function Signup({ games, user, setUser }) {
+function Signup({ setUser }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -63,7 +62,6 @@ function Signup({ games, user, setUser }) {
 
   return (
     <>
-      <NavBar games={games} user={user} setUser={setUser} />
       <section className='signup-form-page'>
         <form className='signup-form' onSubmit={handleSignup}>
           <h1 className='form-title'>Create Your Account</h1>
