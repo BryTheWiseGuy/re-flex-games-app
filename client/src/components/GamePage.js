@@ -126,7 +126,7 @@ function GamePage({ user, setUser }) {
               className="purchase-button"
               variant="danger"
             >
-              Purchase: {price}
+              Add To Cart: {price}
             </Button>
           </div>
         )}

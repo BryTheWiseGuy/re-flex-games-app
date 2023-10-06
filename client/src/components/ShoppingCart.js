@@ -85,7 +85,7 @@ function ShoppingCartPage({ user, setUser }) {
         </div>
         <div className="sticky-bottom">
           <Button variant="danger" className="checkout-button" onClick={handlePurchase}>
-            Complete Purchase: {calculateTotal(user_shopping_cart[0])}
+            Complete Purchase: ${calculateTotal(user_shopping_cart[0])}
           </Button>
         </div>
       </section>

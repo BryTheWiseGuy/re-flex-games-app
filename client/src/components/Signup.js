@@ -1,69 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 import "../stylesheets/App.css";
 import "../stylesheets/SignUpForm.css";
 
 function Signup({ setUser }) {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmed_password, setConfirmedPassword] = useState("");
-  const [error, setError] = useState("");
-
   const navigate = useNavigate();
 
-  function handleSignup(e) {
-    e.preventDefault();
-    fetch("/account_signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        email,
-        password,
-        confirmed_password,
-        about_me: "",
-        profile_image: "",
-      }),
-    })
-      .then((res) => {
+  const formSchema = yup.object().shape({
+    username: yup.string().required("Please enter a username").max(15),
+    email: yup.string().email("Invalid email").required("Please enter a valid email address"),
+    password: yup.string().required("Please enter a password"),
+    confirmed_password: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match').required("Please confirm your password")
+  })
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      password: "",
+      confirmed_password: ""
+    },
+    validationSchema: formSchema,
+    onSubmit: (values) => {
+      fetch("/account_signup", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values, null, 2)
+      }).then((res) => {
         if (res.ok) {
-          res.json().then((user) => {
-            setUser(user);
-            navigate(`/users/${username}`);
-          });
-        } else {
-          handleSignupErrors();
+          res.json().then((newUser) => {
+            setUser(newUser)
+            console.log(newUser)
+            navigate(`/users/:username`);
+          })
         }
       })
-      .catch((error) => {
-        console.log("Network error:", error);
-        alert("Network Error. Please try again later.");
-      });
-  }
-
-  function handleSignupErrors() {
-    if (!username) {
-      return setError("Error: Please enter a valid username.");
-    } else if (!email) {
-      return setError("Error: Please enter a valid email.");
-    } else if (!password) {
-      return setError("Error: Please enter a valid password.");
-    } else if (password != confirmed_password) {
-      return setError("Error: Passwords do not match.");
-    } else if (!confirmed_password) {
-      return setError("Error: Please confirm your password.");
-    } else {
-      return null;
     }
-  }
+  })
 
   return (
     <>
       <section className="signup-form-page">
-        <form className="signup-form" onSubmit={handleSignup}>
+        <form className="signup-form" onSubmit={formik.handleSubmit}>
           <h1 className="form-title">Create Your Account</h1>
           <p className="slogan">Power Up Your Re:Flex</p>
           <label className="form-label" htmlFor="username">
@@ -72,45 +54,48 @@ function Signup({ setUser }) {
           <input
             type="text"
             id="username"
+            name="username"
             placeholder="Username"
-            autoComplete="off"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={formik.handleChange}
+            value={formik.values.username}
           ></input>
+          <p className="error-text">{formik.errors.username}</p>
           <label className="form-label" htmlFor="email">
             Email{" "}
           </label>
           <input
             type="text"
             id="email"
+            name="email"
             placeholder="name@company.com"
-            autoComplete="off"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={formik.handleChange}
+            value={formik.values.email}
           ></input>
+          <p className="error-text">{formik.errors.email}</p>
           <label className="form-label" htmlFor="password">
             Password{" "}
           </label>
           <input
             type="password"
             id="password"
+            name="password"
             placeholder="Password"
-            autoComplete="off"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={formik.handleChange}
+            value={formik.values.password}
           ></input>
-          <label className="form-label" htmlFor="password_confirm">
+          <p className="error-text">{formik.errors.password}</p>
+          <label className="form-label" htmlFor="confirmed_password">
             Confirm Password{" "}
           </label>
           <input
             type="password"
-            id="password_confirm"
+            id="confirmed_password"
+            name="confirmed_password"
             placeholder="Confirm Password"
-            autoComplete="off"
-            value={confirmed_password}
-            onChange={(e) => setConfirmedPassword(e.target.value)}
+            onChange={formik.handleChange}
+            value={formik.values.confirmed_password}
           ></input>
-          {error ? <p className="error-text">{error}</p> : null}
+          <p className="error-text">{formik.errors.confirmed_password}</p>
           <button id="signup-button" type="submit" value="Signup">
             Sign Up!
           </button>
