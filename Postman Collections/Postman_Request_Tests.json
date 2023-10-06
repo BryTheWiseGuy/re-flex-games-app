@@ -342,18 +342,6 @@
 						"url": "http://127.0.0.1:5555/users/gamergirl22/shopping_cart/items"
 					},
 					"response": []
-				},
-				{
-					"name": "New Request",
-					"id": "e2e23b85-7d03-4346-9082-56980b1ce794",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
 				}
 			],
 			"id": "f550b8ec-ff8c-4ed4-93ef-08c2536e0154"
