@@ -168,8 +168,7 @@ class CheckSession(Resource):
 
 class HomePageResource(Resource):
     def get(self):
-        def serve_react_app():
-            return send_from_directory('/client/public', 'index.html')
+        return 'Re:Flex Games App Database'
 
 class GamesIndexResource(Resource):
     def get(self):
