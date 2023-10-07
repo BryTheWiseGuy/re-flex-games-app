@@ -83,7 +83,7 @@ class UserLibrary(db.Model):
     __tablename__ = 'user_library'
     
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, ForeignKey('users.id'))
     game_id = db.Column(db.Integer, ForeignKey('games.id'))
     
     game = db.relationship('Game', back_populates='user_library')

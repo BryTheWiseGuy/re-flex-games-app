@@ -147,7 +147,7 @@ class UserSignUp(Resource):
         db.session.commit()
         
         user_shopping_cart = ShoppingCart(user_id=user.id)
-        library = UserLibrary(user_id=user.id)
+        library = UserLibrary()
         
         db.session.add(user_shopping_cart)
         db.session.add(library)

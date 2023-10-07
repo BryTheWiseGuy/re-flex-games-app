@@ -28,83 +28,85 @@ function UserLibrary({ user, setUser }) {
             <p>Game Library</p>
           </div>
           <div className="user-library-grid">
-            {library ? (
-              library.map((game) => {
-                const { game_image, title, id } = game;
+            {library
+              ? library.map((game) => {
+                  const { game_image, title, id } = game;
 
-                function handleDelete(e) {
-                  e.preventDefault();
-                  fetch(`/users/${username}/library/${id}`, {
-                    method: "DELETE",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                  }).then((res) => {
-                    if (res.ok) {
-                      res.json().then((updatedUser) => {
-                        setUser(updatedUser);
-                        setShowModal(true);
-                      });
+                  async function handleDelete(e) {
+                    e.preventDefault();
+                    const response = await fetch(
+                      `/users/${username}/library/${id}`,
+                      {
+                        method: "DELETE",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                      }
+                    );
+
+                    if (response.ok) {
+                      const updatedUser = await response.json();
+                      setUser(updatedUser);
+                      setShowModal(true);
                     }
-                  });
-                }
+                  }
 
-                return (
-                  <>
-                    <Modal
-                      show={showModal}
-                      onHide={() => setShowModal(false)}
-                      className="custom-modal"
-                    >
-                      <Modal.Header>
-                        <Modal.Title>
-                          <i
-                            class="fa-regular fa-circle-check"
-                            style={{ marginRight: "8px" }}
-                          ></i>
-                          Game Removed!
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        Game has successfully been removed from your library!
-                      </Modal.Body>
-                    </Modal>
-                    <div className="game-container">
-                      <img
-                        onClick={() => navigate(`/games/${id}`)}
-                        className="library-game-image"
-                        src={game_image}
-                        alt={title}
-                      />
-                      <div className="button-container">
-                        <Button className="library-play-button">
-                          <i class="fa-solid fa-play"></i>
-                        </Button>
-                        <Button
-                          className="library-remove-button"
-                          variant="danger"
-                          onClick={handleDelete}
-                        >
-                          <i class="fa-regular fa-trash-can fa-sm"></i>
-                        </Button>
+                  return (
+                    <>
+                      <Modal
+                        show={showModal}
+                        onHide={() => setShowModal(false)}
+                        className="custom-modal"
+                      >
+                        <Modal.Header>
+                          <Modal.Title>
+                            <i
+                              class="fa-regular fa-circle-check"
+                              style={{ marginRight: "8px" }}
+                            ></i>
+                            Game Removed!
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          Game has successfully been removed from your library!
+                        </Modal.Body>
+                      </Modal>
+                      <div className="game-container">
+                        <img
+                          onClick={() => navigate(`/games/${id}`)}
+                          className="library-game-image"
+                          src={game_image}
+                          alt={title}
+                        />
+                        <div className="button-container">
+                          <Button className="library-play-button">
+                            <i class="fa-solid fa-play"></i>
+                          </Button>
+                          <Button
+                            className="library-remove-button"
+                            variant="danger"
+                            onClick={handleDelete}
+                          >
+                            <i class="fa-regular fa-trash-can fa-sm"></i>
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                  </>
-                );
-              })
-            ) : null}
+                    </>
+                  );
+                })
+              : null}
           </div>
         </div>
       </>
     );
   } else {
     return (
-      <div className='spinner-container'>
+      <div className="spinner-container">
         <Spinner animation="border" role="status">
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       </div>
-    )
+    );
   }
 }
 
