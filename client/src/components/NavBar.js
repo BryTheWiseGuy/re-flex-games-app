@@ -8,13 +8,19 @@ import "../stylesheets/NavBar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function NavBar({ games, user, setUser }) {
-  function handleLogout() {
-    fetch("/logout", {
+  
+  const handleLogout = async ()  => {
+    const response = await fetch("/logout", {
       method: "DELETE",
-    }).then((r) => {
-      if (r.ok) {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then((res) => {
+      if (res.ok) {
         setUser(null);
       }
+    }).catch((error) => {
+      console.error('Error during logout:', error);
     });
   }
 

@@ -137,7 +137,6 @@ if __name__ == '__main__':
             db.session.add(user)
         
         db.session.commit()
-        print(users_data[0])
         
         # UserLibrary Seed
         print("Seeding User Libraries...")

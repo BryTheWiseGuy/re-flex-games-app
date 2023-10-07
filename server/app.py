@@ -253,9 +253,7 @@ class UserByUsernameResource(Resource):
         db.session.add(user)
         db.session.commit()
         
-        user_dict = user.to_dict()
-        
-        return user_dict, 200
+        return singular_user_schema.dump(user), 200
     
     def delete(self, username):
         user = User.query.filter(User.username == username).first()
