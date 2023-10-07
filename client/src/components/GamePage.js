@@ -3,10 +3,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/esm/Spinner";
 import Ratio from "react-bootstrap/Ratio";
 import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import "../stylesheets/GamePage.css";
 
 function GamePage({ user, setUser }) {
   const [purchased, setPurchased] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [game, setGame] = useState({});
   const { id } = useParams();
 
@@ -38,7 +40,7 @@ function GamePage({ user, setUser }) {
         },
         body: JSON.stringify({ game_id: game.id }),
       })
-        .then(setPurchased(true))
+        .then(setPurchased(true), setShowModal(true))
         .catch((error) => {
           console.log("Network error:", error);
           alert("Network Error. Please try again later.");
@@ -47,6 +49,8 @@ function GamePage({ user, setUser }) {
       navigate("/login");
     }
   };
+
+  const closeModal = () => setShowModal(false);
 
   if (game) {
     const {
@@ -72,20 +76,20 @@ function GamePage({ user, setUser }) {
           <section className="game-details">
             <article className="genre-publisher">
               <div className="genre">
-                <h4>Genre</h4>
+                <h2>Genre</h2>
                 <p>{genre}</p>
               </div>
               <div className="publisher">
-                <h4>Publisher</h4>
+                <h2>Publisher</h2>
                 <p key={crypto.randomUUID()}>{publisher}</p>
               </div>
             </article>
             <article className="platform-release-date">
               <div className="release-date">
-                <h4>Release Date: </h4>
+                <h2>Release Date: </h2>
                 <p key={crypto.randomUUID()}>{release_date}</p>
               </div>
-              <h4>Platforms: </h4>
+              <h2>Platforms: </h2>
               {platforms ? (
                 <div className="platforms">
                   {platforms.map((platform) => {
@@ -116,8 +120,25 @@ function GamePage({ user, setUser }) {
         {purchased ? (
           <div className="sticky-bottom">
             <Button className="purchase-button" variant="danger" disabled>
-              Purchase: {price}
+              Add to Cart: ${price}
             </Button>
+            <Modal
+              show={showModal}
+              onHide={closeModal}
+              variant="dark"
+              className="custom-modal"
+            >
+              <Modal.Header>
+                <Modal.Title>
+                  <i
+                    class="fa-regular fa-circle-check"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  Item Added to Cart
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>Item successfully added to your cart!</Modal.Body>
+            </Modal>
           </div>
         ) : (
           <div className="sticky-bottom">
@@ -126,7 +147,7 @@ function GamePage({ user, setUser }) {
               className="purchase-button"
               variant="danger"
             >
-              Add To Cart: {price}
+              Add to Cart: ${price}
             </Button>
           </div>
         )}

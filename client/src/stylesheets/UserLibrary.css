@@ -1,0 +1,83 @@
+.user-library-page {
+  background-image: url('../media-assets/sign-up-form-banner.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 92.25vh;
+  overflow: hidden;
+}
+
+.user-library-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(46vw, 1fr));
+  overflow: auto;
+}
+
+.button-container {
+  display: flex;
+}
+
+.library-remove-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5vh;
+  width: 50%;
+  align-self: flex-end;
+  font-size: 28px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.library-play-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5vh;
+  width: 50%;
+  align-self: flex-end;
+  font-size: 28px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.library-game-image {
+  width: 49vw;
+  height: 69vw;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.library-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 7vh;
+  font-size: 48px;
+  font-weight: 500;
+  border-radius: 8px;
+  margin: 2px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.library-header p {
+  margin: 0;
+  line-height: 0;
+  letter-spacing: 1px;
+  animation: textGlow 2s infinite;
+}
+
+@keyframes textGlow {
+  0% {
+    text-shadow: 0 0 10px #007BFF, 0 0 20px #007BFF, 0 0 20px #007BFF;
+  }
+  50% {
+    text-shadow: 0 0 20px #007BFF, 0 0 40px #007BFF, 0 0 40px #007BFF;
+  }
+  100% {
+    text-shadow: 0 0 10px #007BFF, 0 0 20px #007BFF, 0 0 20px #007BFF;
+  }
+}

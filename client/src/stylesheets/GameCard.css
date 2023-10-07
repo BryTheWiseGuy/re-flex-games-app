@@ -19,15 +19,16 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         font-weight: 300;
         letter-spacing: 0.05rem;
         width: 49vw;
-        background-color: #2f2f2f;
         color: #fff;
         border: none;
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
     }
 
     

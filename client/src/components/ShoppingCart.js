@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import "../stylesheets/ShoppingCart.css";
 
 function ShoppingCartPage({ user, setUser }) {
+  const [showModal, setShowModal] = useState(false);
+
   const navigate = useNavigate();
+  const closeModal = () => setShowModal(false);
 
   useEffect(() => {
     fetch("/check_session").then((res) => {
       if (res.ok) {
         res.json().then((user) => setUser(user));
       } else {
-        navigate('/login');
+        navigate("/login");
       }
     });
   }, []);
@@ -25,18 +29,18 @@ function ShoppingCartPage({ user, setUser }) {
     }
     return totalPrice;
   }
-  
+
   if (user) {
-    const { user_shopping_cart } = user
+    const { user_shopping_cart } = user;
 
     function handlePurchase(e) {
-      e.preventDefault()
+      e.preventDefault();
       fetch(`/checkout/${user_shopping_cart[0][0].shopping_cart_id}`)
         .then((res) => res.json())
         .then((updatedUser) => {
-          setUser(updatedUser)
-          console.log(user)
-        })
+          setUser(updatedUser);
+          setShowModal(true);
+        });
     }
 
     return (
@@ -47,19 +51,21 @@ function ShoppingCartPage({ user, setUser }) {
                 const { id, title, game_image, price } = game.game;
 
                 function handleDelete(e) {
-                  e.preventDefault()
+                  e.preventDefault();
                   fetch(`/users/${user.username}/shopping_cart/items`, {
-                    method: 'DELETE',
+                    method: "DELETE",
                     headers: {
-                      'Content-Type': 'application/json'
+                      "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ game_id: id })
-                  }).then(() => {
-                    setUser((prevUser) => ({
-                      ...prevUser,
-                      user_shopping_cart: [prevUser.user_shopping_cart[0].filter((item) => item.id !== id)],
-                    }));
-                })};
+                    body: JSON.stringify({ game_id: id }),
+                  }).then((res) => {
+                    if (res.ok) {
+                      res.json().then((updatedUser) => {
+                        setUser(updatedUser);
+                      });
+                    }
+                  });
+                }
 
                 return (
                   <div className="cart-item-container">
@@ -71,22 +77,55 @@ function ShoppingCartPage({ user, setUser }) {
                     />
                     <div className="button-details-container">
                       <div className="details">
-                        <p>{title}</p>
-                        <p>{price}</p>
+                        <p className="title">{title}</p>
+                        <p className="price">{price}</p>
                       </div>
-                      <Button variant="danger" className="remove-button" onClick={handleDelete}>
+                      <Button
+                        variant="danger"
+                        className="remove-button"
+                        onClick={handleDelete}
+                      >
                         Remove from cart
                       </Button>
                     </div>
                   </div>
                 );
               })
-            : null }
+            : null}
         </div>
         <div className="sticky-bottom">
-          <Button variant="danger" className="checkout-button" onClick={handlePurchase}>
-            Complete Purchase: ${calculateTotal(user_shopping_cart[0])}
-          </Button>
+          {user_shopping_cart[0].length > 0 ? (
+            <Button
+              variant="danger"
+              className="checkout-button"
+              onClick={handlePurchase}
+            >
+              Complete Purchase: ${calculateTotal(user_shopping_cart[0])}
+            </Button>
+          ) : (
+            <Button variant="danger" className="checkout-button" disabled>
+              Complete Purchase: ${calculateTotal(user_shopping_cart[0])}
+            </Button>
+          )}
+          <Modal
+            show={showModal}
+            onHide={closeModal}
+            variant="dark"
+            className="custom-modal"
+          >
+            <Modal.Header>
+              <Modal.Title>
+                <i
+                  class="fa-regular fa-circle-check"
+                  style={{ marginRight: "8px" }}
+                ></i>
+                Purchase Successful!
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Games have been successfully added to your library!
+            </Modal.Body>
+          </Modal>
         </div>
       </section>
     );

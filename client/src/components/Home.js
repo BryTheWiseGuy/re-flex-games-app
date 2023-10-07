@@ -19,7 +19,7 @@ function Home({ user, games, setUser }) {
       <NavBar games={games} user={user} setUser={setUser} />
       <div className="grid-container">
         {games.map((game) => {
-          return <GameCard key={ crypto.randomUUID() } game={game} />;
+          return <GameCard key={crypto.randomUUID()} game={game} />;
         })}
       </div>
     </div>

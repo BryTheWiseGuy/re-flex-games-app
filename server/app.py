@@ -308,22 +308,16 @@ class UserLibraryByUsernameResource(Resource):
 
 # Tested
 class DeleteUserLibraryEntry(Resource):   
-    def delete(self, username, id):       
+    def delete(self, username, game_id):       
         user = User.query.filter(User.username == username).first()
+        user_library_entry = UserLibrary.query.filter(UserLibrary.game_id == game_id).first()
         
         check_for_authorization_and_authentication(session, username, user)
         
-        if user:
-            user_library_entry = UserLibrary.query.filter(UserLibrary.id == id).first()
-            
-            if user_library_entry:
-                db.session.delete(user_library_entry)
-                db.session.commit()
-                return {"message": "200: OK"}, 200
-            else:
-                return {"message": "404: Game Not Found"}, 404
-        else:
-            return {"message": "404: User Not Found"}, 404
+        db.session.delete(user_library_entry)
+        db.session.commit()
+        
+        return singular_user_schema.dump(user), 200
 
 # Tested
 class UserShoppingCartResource(Resource):
@@ -406,7 +400,7 @@ class UserCartItemsResource(Resource):
         db.session.delete(cart_item)
         db.session.commit()
         
-        return {"message": "200: OK"}, 200
+        return singular_user_schema.dump(user), 200
     
 @app.route('/checkout/<int:cart_id>')
 def checkout(cart_id):
@@ -436,7 +430,7 @@ api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(UsersResource, '/users', endpoint='users')
 api.add_resource(UserByUsernameResource, '/users/<username>')
 api.add_resource(UserLibraryByUsernameResource, '/users/<username>/library')
-api.add_resource(DeleteUserLibraryEntry, '/users/<username>/library/<int:id>')
+api.add_resource(DeleteUserLibraryEntry, '/users/<username>/library/<int:game_id>')
 api.add_resource(UserShoppingCartResource, '/users/<username>/shopping_cart')
 api.add_resource(UserCartItemsResource, '/users/<username>/shopping_cart/items')
 api.add_resource(GamesIndexResource, '/games', endpoint='games')

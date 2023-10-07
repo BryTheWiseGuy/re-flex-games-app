@@ -57,9 +57,10 @@ function Signup({ setUser }) {
             name="username"
             placeholder="Username"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.username}
           ></input>
-          <p className="error-text">{formik.errors.username}</p>
+          <p className="error-text">{formik.touched.username && formik.errors.username}</p>
           <label className="form-label" htmlFor="email">
             Email{" "}
           </label>
@@ -69,9 +70,10 @@ function Signup({ setUser }) {
             name="email"
             placeholder="name@company.com"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.email}
           ></input>
-          <p className="error-text">{formik.errors.email}</p>
+          <p className="error-text">{formik.touched.email && formik.errors.email}</p>
           <label className="form-label" htmlFor="password">
             Password{" "}
           </label>
@@ -81,9 +83,10 @@ function Signup({ setUser }) {
             name="password"
             placeholder="Password"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.password}
           ></input>
-          <p className="error-text">{formik.errors.password}</p>
+          <p className="error-text">{formik.touched.password && formik.errors.password}</p>
           <label className="form-label" htmlFor="confirmed_password">
             Confirm Password{" "}
           </label>
@@ -93,9 +96,10 @@ function Signup({ setUser }) {
             name="confirmed_password"
             placeholder="Confirm Password"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.confirmed_password}
           ></input>
-          <p className="error-text">{formik.errors.confirmed_password}</p>
+          <p className="error-text">{formik.touched.confirmed_password && formik.errors.confirmed_password}</p>
           <button id="signup-button" type="submit" value="Signup">
             Sign Up!
           </button>

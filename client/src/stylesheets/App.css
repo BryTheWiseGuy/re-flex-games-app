@@ -7,9 +7,8 @@ html, body {
 
 .error-text {
   font-weight: 300;
-  font-size: 0.8rem;
+  line-height: 5px;
   letter-spacing: 0.5px;
-  color: #d25555;
   text-align: center;
   margin: 0;
 }
