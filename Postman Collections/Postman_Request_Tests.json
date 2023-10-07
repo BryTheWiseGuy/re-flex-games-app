@@ -144,6 +144,18 @@
 						"url": "http://127.0.0.1:5555/login"
 					},
 					"response": []
+				},
+				{
+					"name": "Logout User",
+					"id": "85520c5c-72d5-4c80-ad6f-5036d842d2a7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"id": "ea3b9ee6-31e2-401b-bc2f-9b9da0325df1"
