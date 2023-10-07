@@ -7,7 +7,6 @@ blinker==1.6.3; python_version >= '3.7'
 click==8.1.7; python_version >= '3.7'
 decorator==5.1.1; python_version >= '3.7'
 executing==2.0.0
-faker==19.6.2
 flask==3.0.0
 flask-cors==4.0.0
 flask-marshmallow==0.15.0

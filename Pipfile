@@ -12,7 +12,6 @@ sqlalchemy-serializer = "*"
 flask-restful = "*"
 flask-marshmallow = "*"
 flask-cors = "*"
-faker = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
 
