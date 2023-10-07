@@ -111,7 +111,7 @@
 					"response": []
 				},
 				{
-					"name": "Get User",
+					"name": "Get Users",
 					"id": "66d23859-4399-4ac1-9d75-f3722b0d20d4",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -119,7 +119,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://127.0.0.1:5555/users/gamergirl22"
+						"url": "http://127.0.0.1:5555/users"
 					},
 					"response": []
 				},
@@ -152,8 +152,9 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [],
+						"url": "http://127.0.0.1:5555/logout"
 					},
 					"response": []
 				}
@@ -267,7 +268,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://127.0.0.1:5555/users/gamergirl22/shopping_cart"
+						"url": "http://127.0.0.1:5555/users/brythewiseguy@gmail.com/shopping_cart"
 					},
 					"response": []
 				},
@@ -323,7 +324,17 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:5555/checkout/1"
 					},
 					"response": []
 				}
@@ -351,7 +362,7 @@
 								}
 							}
 						},
-						"url": "http://127.0.0.1:5555/users/gamergirl22/shopping_cart/items"
+						"url": "http://127.0.0.1:5555/users/brythewiseguy/shopping_cart/items"
 					},
 					"response": []
 				},
@@ -366,14 +377,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"shopping_cart_id\": 1,\r\n    \"game_id\": 2\r\n}",
+							"raw": "{\r\n    \"shopping_cart_id\": 1,\r\n    \"game_id\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://127.0.0.1:5555/users/gamergirl22/shopping_cart/items"
+						"url": "http://127.0.0.1:5555/users/brythewiseguy@gmail.com/shopping_cart/items"
 					},
 					"response": []
 				}
