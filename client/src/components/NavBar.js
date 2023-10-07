@@ -35,13 +35,13 @@ function NavBar({ games, user, setUser }) {
               href={`/users/${username}`}
               style={{ fontSize: "24px", display: "flex", alignItems: "center" }}
             >
-              Profile <i class="fa-solid fa-user fa-xs" style={{marginLeft: '8px'}}></i>
+              Profile <i className="fa-solid fa-user fa-xs" style={{marginLeft: '8px'}}></i>
             </NavDropdown.Item>
             <NavDropdown.Item
               href={`/users/${username}/library`}
               style={{ fontSize: "24px", display: "flex", alignItems: "center" }}
             >
-              Library<i class="fa-solid fa-gamepad" style={{marginLeft: '8px'}}></i>
+              Library<i className="fa-solid fa-gamepad" style={{marginLeft: '8px'}}></i>
             </NavDropdown.Item>
             <NavDropdown.Item
               href={`/users/${username}/shopping_cart`}
@@ -54,7 +54,7 @@ function NavBar({ games, user, setUser }) {
             href="/" onClick={handleLogout}
             style={{ display: "flex", alignItems: "center" }}
           >
-            Logout <i class="fa-solid fa-arrow-right-from-bracket fa-2xs" style={{marginLeft: '10px'}}></i>
+            Logout <i className="fa-solid fa-arrow-right-from-bracket fa-2xs" style={{marginLeft: '10px'}}></i>
           </Nav.Link>
         </>
       );
@@ -82,7 +82,7 @@ function NavBar({ games, user, setUser }) {
               href="/"
               style={{ display: "flex", alignItems: "center" }}
             >
-              Home <i class="fa-solid fa-house fa-2xs" style={{marginLeft: '10px'}}></i>
+              Home <i className="fa-solid fa-house fa-2xs" style={{marginLeft: '10px'}}></i>
             </Nav.Link>
             <NavDropdown title="Games" id="basic-nav-dropdown">
               {games.map((game) => {

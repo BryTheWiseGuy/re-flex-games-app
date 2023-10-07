@@ -131,7 +131,7 @@ function GamePage({ user, setUser }) {
               <Modal.Header>
                 <Modal.Title>
                   <i
-                    class="fa-regular fa-circle-check"
+                    className="fa-regular fa-circle-check"
                     style={{ marginRight: "8px" }}
                   ></i>
                   Item Added to Cart
