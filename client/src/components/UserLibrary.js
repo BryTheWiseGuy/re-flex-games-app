@@ -61,7 +61,7 @@ function UserLibrary({ user, setUser }) {
                         <Modal.Header>
                           <Modal.Title>
                             <i
-                              class="fa-regular fa-circle-check"
+                              className="fa-regular fa-circle-check"
                               style={{ marginRight: "8px" }}
                             ></i>
                             Game Removed!
@@ -80,14 +80,14 @@ function UserLibrary({ user, setUser }) {
                         />
                         <div className="button-container">
                           <Button className="library-play-button">
-                            <i class="fa-solid fa-play"></i>
+                            <i className="fa-solid fa-play"></i>
                           </Button>
                           <Button
                             className="library-remove-button"
                             variant="danger"
                             onClick={handleDelete}
                           >
-                            <i class="fa-regular fa-trash-can fa-sm"></i>
+                            <i className="fa-regular fa-trash-can fa-sm"></i>
                           </Button>
                         </div>
                       </div>

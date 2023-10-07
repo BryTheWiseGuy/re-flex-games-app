@@ -1,25 +1,16 @@
 #!/usr/bin/env python3
-
-import os
-from random import randint, choice as rc
-from faker import Faker
 from app import app
 from datetime import datetime
 from models import db, User, Game, UserLibrary, Platform, GamePlatform, ShoppingCart, CartItem
 
 if __name__ == '__main__':
-    fake = Faker()
     
     with app.app_context():
         print("Deleting previous seeds...")
         
         Game.query.delete()
-        User.query.delete()
-        UserLibrary.query.delete()
         Platform.query.delete()
         GamePlatform.query.delete()
-        ShoppingCart.query.delete()
-        CartItem.query.delete()
         
         print("Running new database seed...")
         
@@ -120,34 +111,6 @@ if __name__ == '__main__':
         
         for game in games_data:
             db.session.add(game)
-        
-        # User Seed
-        print("Seeding Users...")
-        users_data=[
-            User(
-                username="gamergirl22",
-                email="gamergirl22@gmail.com",
-                about_me="I love video games more than anything in the world!!",
-                profile_image="https://tinyurl.com/3ue72h4r",
-            )
-        ]
-        
-        for user in users_data:
-            user.password_hash = 'password'
-            db.session.add(user)
-        
-        db.session.commit()
-        
-        # UserLibrary Seed
-        print("Seeding User Libraries...")
-        
-        user_library_data=[
-            UserLibrary(user_id=1, game_id=1),
-            UserLibrary(user_id=1, game_id=2)
-        ]
-        
-        for library in user_library_data:
-            db.session.add(library)
         
         # Platform Seed
         print("Seeding platforms...")
@@ -294,34 +257,6 @@ if __name__ == '__main__':
         
         for game_platform in game_platform_data:
             db.session.add(game_platform)
-        
-        # ShoppingCart Seed
-        print("Seeding Shopping Carts...")
-        
-        shopping_cart_data = [
-            ShoppingCart(
-                user_id=1,
-            )
-        ]
-        
-        for shopping_cart in shopping_cart_data:
-            db.session.add(shopping_cart)
-        
-        # CartItem Seed
-        print("Seeding Cart Items...")
-        cart_item_data = [
-            CartItem(
-                shopping_cart_id=1,
-                game_id=1
-            ),
-            CartItem(
-                shopping_cart_id=1,
-                game_id=3
-            )
-        ]
-        
-        for item in cart_item_data:
-            db.session.add(item)
         
         db.session.commit()
         

@@ -68,7 +68,7 @@ function ShoppingCartPage({ user, setUser }) {
                 }
 
                 return (
-                  <div className="cart-item-container">
+                  <div key={ crypto.randomUUID() } className="cart-item-container">
                     <img
                       onClick={() => navigate(`/games/${id}`)}
                       className="shopping-cart-image"
@@ -116,7 +116,7 @@ function ShoppingCartPage({ user, setUser }) {
             <Modal.Header>
               <Modal.Title>
                 <i
-                  class="fa-regular fa-circle-check"
+                  className="fa-regular fa-circle-check"
                   style={{ marginRight: "8px" }}
                 ></i>
                 Purchase Successful!
