@@ -17,6 +17,7 @@ psycopg2-binary = "*"
 honcho = "*"
 flask-bcrypt = "*"
 python-dotenv = "*"
+marshmallow-sqlalchemy = "*"
 
 [requires]
 python_full_version = "3.8.13"
