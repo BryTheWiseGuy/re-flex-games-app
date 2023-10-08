@@ -1,4 +1,4 @@
-from flask import request, session, redirect, url_for
+from flask import request, session, redirect, url_for, render_template
 from flask_restful import Resource
 from flask_marshmallow import Marshmallow
 from config import app, db, api
@@ -93,6 +93,11 @@ multiple_cart_item_schema = Cart_Item_Schema(many=True)
     
 # API Resources
 
+@app.route('/')
+@app.route('/<int:id>')
+def index(id=0):
+    return render_template("index.html")
+
 class UserLogin(Resource):
     def post(self):
         data = request.get_json()
@@ -163,10 +168,6 @@ class CheckSession(Resource):
             return singular_user_schema.dump(user), 200
         else:
             return {"message": "401: Unauthorized"}, 401
-
-class HomePageResource(Resource):
-    def get(self):
-        return 'Re:Flex Games App Database'
 
 class GamesIndexResource(Resource):
     def get(self):
@@ -405,7 +406,6 @@ def checkout(cart_id):
             
 # API Endpoints
 
-api.add_resource(HomePageResource, '/')
 api.add_resource(UserSignUp, '/account_signup', endpoint='account_signup')
 api.add_resource(UserLogin, '/login', endpoint='login')
 api.add_resource(UserLogout, '/logout', endpoint='logout')
