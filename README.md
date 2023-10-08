@@ -23,7 +23,7 @@ Re:Flex Games is a single page web application made with React.js, Python, and F
 
 ### Application Showcase Video
 
-[![Re:Flex Games Showcase](readme-media-files/re-flex-games-thumbnail.png)](https://www.youtube.com/watch?v=qTOuomme-mc)
+<iframe width="640" height="360" src="https://www.youtube.com/embed/qTOuomme-mc" title="Re:Flex Games Web Application" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## Installation
 
