@@ -1,357 +1,202 @@
-# Phase 4 Full-Stack Application Project Template
-
-## Learning Goals
-
-- Discuss the basic directory structure of a full-stack Flask/React application.
-- Carry out the first steps in creating your Phase 4 project.
-
----
-
-## Introduction
-
-Fork and clone this lesson for a template for your full-stack application. Take
-a look at the directory structure before we begin (NOTE: node_modules will be
-generated in a subsequent step):
+# Re:Flex Games
 
-```console
-$ tree -L 2
-$ # the -L argument limits the depth at which we look into the directory structure
-.
-├── CONTRIBUTING.md
-├── LICENSE.md
-├── Pipfile
-├── README.md
-├── client
-│   ├── README.md
-│   ├── package.json
-│   ├── public
-│   └── src
-└── server
-    ├── app.py
-    ├── config.py
-    ├── models.py
-    └── seed.py
-```
+## Description
 
-A `migrations` folder will be added to the `server` directory in a later step.
+Re:Flex Games is a single page web application made with React.js, Python, and Flask-SQLalchemy. This application was specifically designed for mobile first as a retail application for video games. Users are able to visit the website and view available games, create a personalized user profile with an about me and a profile picture, and add games to a shopping cart for purchase. Once games are purchased, the games are then moved into the users game library where the game can be played or removed from the library. No refunds here unforunately! In it's current state, the application does not incorporate any administrative functions to update/modify the available games in the database. This is a feature I plan to add in future builds as I continue developing this project.
 
-The `client` folder contains a basic React application, while the `server`
-folder contains a basic Flask application. You will adapt both folders to
-implement the code for your project .
+## Visuals
 
-NOTE: If you did not previously install `tree` in your environment setup, MacOS
-users can install this with the command `brew install tree`. WSL and Linux users
-can run `sudo apt-get install tree` to download it as well.
+### Entity Relationship Diagram
 
-## Where Do I Start?
+![Database ERD](readme-media-files/reflex-games-erd.jpg)
 
-Just as with your Phase 3 Project, this will likely be one of the biggest
-projects you've undertaken so far. Your first task should be creating a Git
-repository to keep track of your work and roll back any undesired changes.
+### Application Screenshots
 
-### Removing Existing Git Configuration
+<table>
+  <tr>
+    <td align="center"><img src="./readme-media-files/reflex-screenshot-1.png" width="200"></td>
+    <td align="center"><img src="./readme-media-files/reflex-screenshot-2.png" width="200"></td>
+    <td align="center"><img src="./readme-media-files/reflex-screenshot-3.png" width="200"></td>
+    <td align="center"><img src="./readme-media-files/reflex-screenshot-4.png" width="200"></td>
+  </tr>
+</table>
 
-If you're using this template, start off by removing the existing metadata for
-Github and Canvas. Run the following command to carry this out:
+### Application Showcase Video
 
-```console
-$ rm -rf .git .canvas
-```
+[![Re:Flex Games Showcase](readme-media-files/re-flex-games-thumbnail.png)](https://www.youtube.com/watch?v=qTOuomme-mc)
 
-The `rm` command removes files from your computer's memory. The `-r` flag tells
-the console to remove _recursively_, which allows the command to remove
-directories and the files within them. `-f` removes them permanently.
+## Installation
 
-`.git` contains this directory's configuration to track changes and push to
-Github (you want to track and push _your own_ changes instead), and `.canvas`
-contains the metadata to create a Canvas page from your Git repo. You don't have
-the permissions to edit our Canvas course, so it's not worth keeping around.
+**NOTE:** Python v3.8, Node.js and `pipenv` are required to use this application. Please see the official Python, Node.js and `pipenv` documentation for instructions on how to ensure these are installed and configured on your machine.
 
-### Creating Your Own Git Repo
+To install and use this application, please follow the steps below:
 
-First things first- rename this directory! Once you have an idea for a name,
-move one level up with `cd ..` and run
-`mv python-p4-project-template <new-directory-name>` to change its name (replace
-<new-directory-name> with an appropriate project directory name).
+1. Fork this repository, and clone it to your own local directory
+2. Once cloning is complete, navigate to the application directory and run `pipenv install`
+    - This should install all required virtual environment dependencies for Python and Flask-SQLAlchemy
+3. Next run `npm install --prefix client` to install React dependencies
+4. From the root directory, run `pipenv shell` to enter into the Python shell
+5. The database should have a fresh seed already applied, but to run a new seed navigate to the `/server` directory and run `python seed.py`
+    - **CAUTION:** Running a new database seed will clear out any new data added to the database since the last database seed
+6. Once confirmation of the database seed is received, navigate back to the root directory and run `honcho start -f Profile.dev` to start the React App and Database simultaneously
+7. **IMPORTANT** This application has only been developed for mobile at this time. To ensure the proper experience, navigate to your broswers developer tools, and switch the view into mobile. This has not been formatted for tablet or desktop screens. 
 
-> **Note: If you typed the `mv` command in a terminal within VS Code, you should
-> close VS Code then reopen it.**
+## Usage
 
-> **Note: `mv` actually stands for "move", but your computer interprets this
-> rename as a move from a directory with the old name to a directory with a new
-> name.**
+**NOTE:** The following sections will be broken down by individual file, outlining the main purpose of each file and giving short descriptions of each individual function. I've also included Postman Collections for the application for API Endpoint testing where necessary.
 
-`cd` back into your new directory and run `git init` to create a local git
-repository. Add all of your local files to version control with `git add --all`,
-then commit them with `git commit -m'initial commit'`. (You can change the
-message here- this one is just a common choice.)
+## Python/Flask-SQLAlchemy Backend
 
-Navigate to [GitHub](https://github.com). In the upper-right corner of the page,
-click on the "+" dropdown menu, then select "New repository". Enter the name of
-your local repo, choose whether you would like it to be public or private, make
-sure "Initialize this repository with a README" is unchecked (you already have
-one), then click "Create repository".
+### `config.py`
 
-Head back to the command line and enter
-`git remote add origin git@github.com:github-username/new-repository-name.git`.
-NOTE: Replace `github-username` with your github username, and
-`new-repository-name` with the name of your new repository. This command will
-map the remote repository to your local repository. Finally, push your first
-commit with `git push -u origin main`.
-
-Your project is now version-controlled locally and online. This will allow you
-to create different versions of your project and pick up your work on a
-different machine if the need arises.
+This configuration file is responsible for setting up configurations for the backend API, including importing critical dependencies. Special dependencies installed here include Flask Bcrypt for password encryption and dotenv for secret key protection.
 
----
+### `models.py`
 
-## Setup
+This file contains all table models utilized in the database structure. It includes various imports from `sqlalchemy` to create models, form join tables, and define base models and record entries. There is no Serializer set up in the models file, as this application uses Marshmallow to serialize record entries.
 
-### `server/`
+1. `User`
+  - This model creates the `users` table and defines base entries. It also sets up the user relationship to the `user_library` and `user_shopping_cart` join tables. It includes password encryption logic through the use of Flask Bcrypt, as well as backend validation logic for `email` and `about_me` data entry.
 
-The `server/` directory contains all of your backend code.
+2. `Game`
+  - This model creates the `games` table and defines base entries. It also sets up the game relationship to the `user_library`, `platforms`, and `cart_items` join tables.
 
-`app.py` is your Flask application. You'll want to use Flask to build a simple
-API backend like we have in previous modules. You should use Flask-RESTful for
-your routes. You should be familiar with `models.py` and `seed.py` by now, but
-remember that you will need to use Flask-SQLAlchemy, Flask-Migrate, and
-SQLAlchemy-Serializer instead of SQLAlchemy and Alembic in your models.
+3. `UserLibrary`
+  - This model creates the `user_library` join table, and sets up foreign key relationships between `Game` and `User` records.
 
-The project contains a default `Pipfile` with some basic dependencies. You may
-adapt the `Pipfile` if there are additional dependencies you want to add for
-your project.
+4. `Platform`
+  - This model create the `platforms` table and defines base entries. It also sets up the relationship with the `game_platform` join table.
 
-To download the dependencies for the backend server, run:
+5. `GamePlatform`
+  - This model creates the `game_platform` join table, and sets up foreign key relationships between `Game` and `Platform` records.
 
-```console
-pipenv install
-pipenv shell
-```
+6. `ShoppingCart`
+  - This model creates the `shopping_cart` join table. This is a tri directional join table that sets up foreign key relationships between `User` and `ShoppingCart`, `ShoppingCart` and `CartItem`, `ShoppingCart` and `UserLibrary`.
 
-You can run your Flask API on [`localhost:5555`](http://localhost:5555) by
-running:
+7. `CartItem`
+  - This model creates the `cart_items` join table, and sets up foreign key relationships between `Game` and `ShoppingCart`
 
-```console
-python server/app.py
-```
+### `app.py`
 
-Check that your server serves the default route `http://localhost:5555`. You
-should see a web page with the heading "Project Server".
+This file utilizes several integral imports to setup serialized schemas and API endpoints, including `flask_restful` and `flask_marshmallow`. This file is broken down into two sections, Model Schemas and API Resources. All table models are imported and utilized in this file to define database interactions for requests to the specified API endpoints. All schemas are defined using Flask-Marshmallow and all API endpoints are defined utilizing Flask-RESTful conventions. Several resources utilize session cookies to ensure users are authorized to view the requested content. This file is responsible for running the bulk of the application processes.
+<br>
+For the sake of the length of this README, I am going to make descriptions here very brief. Please utilize my Postman Collections to test and view functionality of the more critical database requests. Additionally, please refer to the Marshmallow documentation for a more in depth explanation of the Schemas defined here. Marshmallow essentially serializes JSON responses and defines what data these responses should include.
+<br>
+At the bottom of this file, all api endpoints are list and authorization/authentication functions are defined and combined into a singular function that gets passed to each necessary resource.
 
-### `client/`
+1. `UserLogin and UserLogout`
+  - These resources are responsible for handling API requests to their respective API endpoints. `UserLogin` utilizes a POST request to login a user on the frontend and set the session cookie. `UserLogout` utilizes a DELETE request to handle the inverse action and remove the session cookie.
 
-The `client/` directory contains all of your frontend code. The file
-`package.json` has been configured with common React application dependencies,
-include `react-router-dom`. The file also sets the `proxy` field to forward
-requests to `"http://localhost:5555". Feel free to change this to another port-
-just remember to configure your Flask app to use another port as well!
+2. `UserSignUp`
+  - Responsible for the user signup request on the frontend. This is handled through a POST request that pulls data from frontend form entry to be sent to the backend `users` table.
 
-To download the dependencies for the frontend client, run:
+3. `CheckSession`
+  - This resource is used in several frontend components to establish authorization through the session cookie. This cookie is set with the users username if one exists.
 
-```console
-npm install --prefix client
-```
+4. `HomePage`
+  - Serves as a placeholder for the database root endpoint.
 
-You can run your React app on [`localhost:3000`](http://localhost:3000) by
-running:
+5. `GamesIndex`
+  - Responsible for requesting all games in the `games` table through a GET request. This request is used on frontend application startup to set the state of available games.
 
-```sh
-npm start --prefix client
-```
+6. `GameByID`
+  - Responsible for requesting a game by it's specified id. This is utilized on the front end to render information for specific games.
 
-Check that your the React client displays a default page
-`http://localhost:3000`. You should see a web page with the heading "Project
-Client".
+7. `GamePlatform`
+  - Responsible for requesting all available game platforms defined in the database. Utilized to create many-to-many relationships between a Game and its respective platforms.
 
-## Generating Your Database
-
-NOTE: The initial project directory structure does not contain the `instance` or
-`migrations` folders. Change into the `server` directory:
-
-```console
-cd server
-```
+8. `GamePlatformsForGame`
+  - Responsible for handling the many-to-many relationships between a game and it's platforms. Can be utilized to request which platforms are available for a specific games.
 
-Then enter the commands to create the `instance` and `migrations` folders and
-the database `app.db` file:
+9. `GamesForPlatform`
+  - Serves as the inverse to the previous resource, used to request all games available for a specific platform.
 
-```
-flask db init
-flask db upgrade head
-```
+10. `UsersResource`
+  - Responsible for requesting all current user accounts.
 
-Type `tree -L 2` within the `server` folder to confirm the new directory
-structure:
+11. `UserByUsername`
+  - Responsible for requesting specific users by their username. Defines 3 requests. PATCH is utilized on the frontend to edit user information such as the "about me" or user profile image. DELETE currently has no frontend functionality, but can be used to delete a user profile.
 
-```console
-.
-├── app.py
-├── config.py
-├── instance
-│   └── app.db
-├── migrations
-│   ├── README
-│   ├── __pycache__
-│   ├── alembic.ini
-│   ├── env.py
-│   ├── script.py.mako
-│   └── versions
-├── models.py
-└── seed.py
-```
+12. `UserLibraryByUsername`
+  - Responsible for requesting data related to the specified user's library. The POST request is used on the frontend to add entries to the users library.
 
-Edit `models.py` and start creating your models. Import your models as needed in
-other modules, i.e. `from models import ...`.
+13. `DeleteUserLibraryEntry`
+  - Responsible for the deletion of user library records, specified by the game's id. Used on the frontend to delete games from a users library.
 
-Remember to regularly run
-`flask db revision --autogenerate -m'<descriptive message>'`, replacing
-`<descriptive message>` with an appropriate message, and `flask db upgrade head`
-to track your modifications to the database and create checkpoints in case you
-ever need to roll those modifications back.
+14. `UserShoppingCart`
+  - Responsible for requesting data related to the user shopping cart and posting record entries to the user shopping cart. Utilized on the frontend to render the user shopping cart.
 
-> **Tip: It's always a good idea to start with an empty revision! This allows
-> you to roll all the way back while still holding onto your database. You can
-> create this empty revision with `flask db revision -m'Create DB'`.**
+15. `UserCartItems`
+  - Responsible for posting and deleting data related to the items in the user shopping cart. Utilized on the frontend to render shopping cart items and remove items from the shopping cart.
 
-If you want to seed your database, now would be a great time to write out your
-`seed.py` script and run it to generate some test data. Faker has been included
-in the Pipfile if you'd like to use that library.
+16. `/checkout/<int:cart_id>`
+  - This routes sole purpose is to move items from the user shopping cart to the user library
 
----
+### `seed.py`
 
-#### `config.py`
+This file contains seed data for the database. It seeds 10 different `Game` and 8 different `Platform` models to the database, as well as setting up relationships between each game and their respective platforms. This file does not seed any users. This was designed for first time users using the signup feature to create an account and test out application features.
 
-When developing a large Python application, you might run into a common issue:
-_circular imports_. A circular import occurs when two modules import from one
-another, such as `app.py` and `models.py`. When you create a circular import and
-attempt to run your app, you'll see the following error:
+## React Frontend
 
-```console
-ImportError: cannot import name
-```
+### Components
 
-If you're going to need an object in multiple modules like `app` or `db`,
-creating a _third_ module to instantiate these objects can save you a great deal
-of circular grief. Here's a good start to a Flask config file (you may need more
-if you intend to include features like authentication and passwords):
+This folder contains all components utilized in the React application, outside of `App.js` and `Index.js` which are located in the `/src` folder. React Router v6 and React-Boostrap were both utilized in the development of this application. `App.js` houses all frontend routes for the application as well as holds state for the user and games. `Index.js` is responsible for rendering the application. I will outline brief explanations of each component in this section. I will not be going over stylesheets or media assets. Each component has it's own stylesheet.
 
-```py
-# Standard library imports
+1. `Home.js`
+  - Renders the home page, importing the Navbar, GameCarousel, and GameCard components. The games array pulled from state in App.js is used to render separate GameCard components for each game.
 
-# Remote library imports
-from flask import Flask
-from flask_cors import CORS
-from flask_migrate import Migrate
-from flask_restful import Api
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
+2. `NavBar.js`
+  - Renders the NavBar component. This component was designed with React-Bootstrap and has conditional rendering depending on the state of the user. It include 2 separate dropdown sections for games and options related to the user if applicable.
 
-# Local imports
+3. `GameCarousel`
+  - Renders the game carousel seen on the home page. This was also designed with React-Boostrap and renders games based on their id.
 
-# Instantiate app, set attributes
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.json.compact = False
+4. `GameCard`
+  - Renders a game card for each available game on the home page that includes react-bootstrap elements alongside navigation logic through useNavigate to route the user to the specified games page.
 
-# Define metadata, instantiate db
-metadata = MetaData(naming_convention={
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-})
-db = SQLAlchemy(metadata=metadata)
-migrate = Migrate(app, db)
-db.init_app(app)
+5. `Login` and `Signup`
+  - These components render their respective pages and include validation logic through the use of Formik. Upon login or signup a user is navigated to their user profile. All forms on these pages are custom designed using CSS.
 
-# Instantiate REST API
-api = Api(app)
+6. `ProfilePage` and `ProfileCard`
+  - Both of these components serve the rendering of the user profile. The `ProfileCard` houses the user about me input field and the profile image submission, which are both able to be edited by the user.
 
-# Instantiate CORS
-CORS(app)
+7. `ShoppingCart`
+  - Renders the users shopping cart, mapping through all games in the shopping cart and displaying data for each game. Users are able to remove games from the cart and complete their purchase.
 
-```
+8. `UserLibrary`
+  - Renders the users library, where the user can view the games they have purchased and delete games from their library if they choose. The play button serves no purpose other than a visual representation of how the application could look if this feature was implemented.
 
-Now let's review that last line...
+## Acknowledgments
 
-#### CORS
+All media assets used in the project were openly sourced from google. I do not own the rights to any of these assets, and therefore do not condone any utilization of these assets that would result in monetary gain.
 
-CORS (Cross-Origin Resource Sharing) is a system that uses HTTP headers to
-determine whether resources from different servers-of-origin can be accessed. If
-you're using the fetch API to connect your frontend to your Flask backend, you
-need to configure CORS on your Flask application instance. Lucky for us, that
-only takes one line:
+## Contributing
 
-```py
-CORS(app)
+Pull requests are welcome! Please feel free to reach out to me at if there are specific features you'd like to see implemented!  
+For major changes, please reach out to me directly to discuss what you would like to change.  
+All pushes to main branch will be made upon my approval.  
+Please make sure to run and update tests as appropriate.
 
-```
+## License
 
-By default, Flask-CORS enables CORS on all routes in your application with all
-fetching servers. You can also specify the resources that allow CORS. The
-following specifies that routes beginning with `api/` allow CORS from any
-originating server:
+MIT License
 
-```py
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+Copyright (c) 2023 Brian Ashman
 
-```
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You can also set this up resource-by-resource by importing and using the
-`@cross_origin` decorator:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-```py
-@app.route("/")
-@cross_origin()
-def howdy():
-  return "Howdy partner!"
-
-```
-
----
-
-## Updating Your README.md
-
-`README.md` is a Markdown file that describes your project. These files can be
-used in many different ways- you may have noticed that we use them to generate
-entire Canvas lessons- but they're most commonly used as homepages for online
-Git repositories. **When you develop something that you want other people to
-use, you need to have a README.**
-
-Markdown is not a language that we cover in Flatiron's Software Engineering
-curriculum, but it's not a particularly difficult language to learn (if you've
-ever left a comment on Reddit, you might already know the basics). Refer to the
-cheat sheet in this lesson's resources for a basic guide to Markdown.
-
-### What Goes into a README?
-
-This README should serve as a template for your own- go through the important
-files in your project and describe what they do. Each file that you edit (you
-can ignore your migration files) should get at least a paragraph. Each function
-should get a small blurb.
-
-You should descibe your application first, and with a good level of detail. The
-rest should be ordered by importance to the user. (Probably routes next, then
-models.)
-
-Screenshots and links to resources that you used throughout are also useful to
-users and collaborators, but a little more syntactically complicated. Only add
-these in if you're feeling comfortable with Markdown.
-
----
-
-## Conclusion
-
-A lot of work goes into a full-stack application, but it all relies on concepts
-that you've practiced thoroughly throughout this phase. Hopefully this template
-and guide will get you off to a good start with your Phase 4 Project.
-
-Happy coding!
-
----
-
-## Resources
-
-- [Setting up a respository - Atlassian](https://www.atlassian.com/git/tutorials/setting-up-a-repository)
-- [Create a repo- GitHub Docs](https://docs.github.com/en/get-started/quickstart/create-a-repo)
-- [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
-- [Python Circular Imports - StackAbuse](https://stackabuse.com/python-circular-imports/)
-- [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/)
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

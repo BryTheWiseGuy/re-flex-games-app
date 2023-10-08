@@ -1,7 +1,6 @@
-from flask import request, session, redirect, url_for, send_from_directory
+from flask import request, session, redirect, url_for
 from flask_restful import Resource
 from flask_marshmallow import Marshmallow
-from sqlalchemy.exc import IntegrityError
 from config import app, db, api
 from models import User, Game, Platform, UserLibrary, ShoppingCart, CartItem, GamePlatform
 ma = Marshmallow(app)
@@ -115,7 +114,6 @@ class UserLogout(Resource):
         session['user_username'] = None
         return {"message": "204: Logout successful"}, 204
 
-# Tested
 class UserSignUp(Resource):
     def post(self):
         json_data = request.get_json()
@@ -185,7 +183,6 @@ def check_if_member():
             if session['games_viewed'] > 5:
                 return redirect(url_for('account_signup'))
 
-# Tested
 class GameByIDResource(Resource):
     def get(self, id):
         game = Game.query.filter(Game.id == id).first()       
@@ -194,28 +191,24 @@ class GameByIDResource(Resource):
         else:
             return {"message": "404: Game Not Found"}, 404
 
-# Tested
 class GamePlatformsResource(Resource):
     def get(self):
         platforms = Platform.query.all()
         
         return multiple_platform_schema.dump(platforms), 200
 
-# Tested
 class GamePlatformsForGameResource(Resource):
     def get(self, id):
         games = GamePlatform.query.filter(GamePlatform.game_id == id).all()        
         
         return [singular_platform_schema.dump(game.platform) for game in games], 200
 
-# Tested
 class GamesForPlatformResource(Resource):
     def get(self, id):
         games = Game.query.join(GamePlatform).join(Platform).filter(Platform.id == id).all()
         
         return [singular_game_schema.dump(game) for game in games], 200
-
-# Tested
+    
 class UsersResource(Resource):
     def get(self):
         if 'user_username' in session:
@@ -224,7 +217,6 @@ class UsersResource(Resource):
         else:
             return {"message": "401: Unauthorized"}, 401
 
-# Tested
 class UserByUsernameResource(Resource):
     def get(self):
         user = User.query.filter(User.username==session.get('user_username')).first()
@@ -267,10 +259,9 @@ class UserByUsernameResource(Resource):
         db.session.commit()
         return {"message": f"200: Account successfully deleted"}, 200
 
-# Tested
 class UserLibraryByUsernameResource(Resource):
     def get(self, username):
-        user = User.query.filter(User.username == username).first()
+        user = User.query.filter(User.username == session.get('user_username')).first()
         
         check_for_authorization_and_authentication(session, username, user)
         
@@ -285,7 +276,7 @@ class UserLibraryByUsernameResource(Resource):
             return {"message": "401: Unauthorized"}, 401
     
     def post(self, username):
-        user = User.query.filter(User.username == username).first()
+        user = User.query.filter(User.username == session.get('user_username')).first()
         
         check_for_authorization_and_authentication(session, username, user)
         
@@ -303,10 +294,9 @@ class UserLibraryByUsernameResource(Resource):
         else:
             return {"message": "404: User not found"}, 404
 
-# Tested
 class DeleteUserLibraryEntry(Resource):   
     def delete(self, username, game_id):       
-        user = User.query.filter(User.username == username).first()
+        user = User.query.filter(User.username == session.get('user_username')).first()
         user_library_entry = UserLibrary.query.filter(UserLibrary.game_id == game_id).first()
         
         check_for_authorization_and_authentication(session, username, user)
@@ -316,10 +306,9 @@ class DeleteUserLibraryEntry(Resource):
         
         return singular_user_schema.dump(user), 200
 
-# Tested
 class UserShoppingCartResource(Resource):
     def get(self, username):
-        user = User.query.filter(User.username == username).first()
+        user = User.query.filter(User.username == session.get('user_username')).first()
         
         check_for_authorization_and_authentication(session, username, user)
         
@@ -331,7 +320,7 @@ class UserShoppingCartResource(Resource):
             return {"message": "404: Cart Not Found"}, 404
     
     def post(self, username):
-        user = User.query.filter(User.username == username).first()
+        user = User.query.filter(User.username == session.get('user_username')).first()
         
         check_for_authorization_and_authentication(session, username, user)
         
@@ -347,11 +336,10 @@ class UserShoppingCartResource(Resource):
         else:
             return {"message": "401: Unauthorized"}, 401
 
-# Tested
 class UserCartItemsResource(Resource):
 
     def post(self, username):
-        user = User.query.filter(User.username == username).first()
+        user = User.query.filter(User.username == session.get('user_username')).first()
         
         check_for_authorization_and_authentication(session, username, user)
         
@@ -415,8 +403,6 @@ def checkout(cart_id):
     
     return singular_user_schema.dump(user), 200
             
-    
-
 # API Endpoints
 
 api.add_resource(HomePageResource, '/')

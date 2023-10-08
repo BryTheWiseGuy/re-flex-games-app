@@ -9,8 +9,12 @@ if __name__ == '__main__':
         print("Deleting previous seeds...")
         
         Game.query.delete()
+        User.query.delete()
+        UserLibrary.query.delete()
         Platform.query.delete()
         GamePlatform.query.delete()
+        ShoppingCart.query.delete()
+        CartItem.query.delete()
         
         print("Running new database seed...")
         
@@ -94,7 +98,7 @@ if __name__ == '__main__':
             ),
             Game(
                 title="Tears of the Kingdom",
-                description="It's a Zelda game!",
+                description="An epic adventure awaits in the Legend of Zelda: Tears of the Kingdom game, only on the Nintendo Switch system. In this sequel to the Legend of Zelda: Breath of the Wild game, you'll decide your own path through the sprawling landscapes of Hyrule and the mysterious islands floating in the vast skies above. Can you harness the power of Link's new abilities to fight back against the malevolent forces that threaten the kingdom?",
                 genre="Action Adventure",
                 release_date=datetime(
                     year=2023,
@@ -105,8 +109,68 @@ if __name__ == '__main__':
                 carousel_image='https://images.alphacoders.com/127/1272163.jpg',
                 game_image="https://upload.wikimedia.org/wikipedia/en/f/fb/The_Legend_of_Zelda_Tears_of_the_Kingdom_cover.jpg",
                 game_trailer='https://www.youtube.com/embed/SSVYVgm4tH4?si=AfSROHeX0TLU_CYE',
+                price=49.99
+            ),
+            Game(
+                title="Dead Space",
+                description="Isaac Clarke is an everyman engineer on a mission to repair a vast mining ship, the USG Ishimura, only to discover something has gone horribly wrong. The ship's crew has been slaughtered and Isaac's beloved partner, Nicole, is lost somewhere on board. Now alone and armed with only his engineering tools and skills, Isaac races to find Nicole as the nightmarish mystery of what happened aboard the Ishimura unravels around him. Trapped with hostile creatures called Necromorphs, Isaac faces a battle for survival, not only against the escalating terrors of the ship but against his own crumbling sanity.",
+                genre="Survival Horror",
+                release_date=datetime(
+                    year=2023,
+                    month=1,
+                    day=27
+                    ),
+                publisher="Motive Studio",
+                carousel_image='https://theplayeristhething.com/wp-content/uploads/2023/01/1277778-scaled.jpg',
+                game_image="https://i0.wp.com/thepopbreak.com/wp-content/uploads/2023/03/FeK7GBvVUAA_OSE.jpg?ssl=1",
+                game_trailer='https://www.youtube.com/embed/ctQl9wa3ydE',
                 price=59.99
-            )
+            ),
+            Game(
+                title="Diable IV",
+                description="The endless battle between the High Heavens and the Burning Hells rages on as chaos threatens to consume Sanctuary. With ceaseless demons to slaughter, countless Abilities to master, nightmarish Dungeons, and Legendary loot, this vast, open world brings the promise of adventure and devastation.",
+                genre="Hack and Slash",
+                release_date=datetime(
+                    year=2023,
+                    month=6,
+                    day=5
+                    ),
+                publisher="Blizzard Entertainment",
+                carousel_image='https://cdn.cloudflare.steamstatic.com/steam/apps/2344520/capsule_616x353.jpg?t=1696625409',
+                game_image="https://upload.wikimedia.org/wikipedia/en/1/1c/Diablo_IV_cover_art.png",
+                game_trailer='https://www.youtube.com/embed/tkzbNhdsQ_Y',
+                price=59.99
+            ),
+            Game(
+                title="Horizon: Forbidden West",
+                description="The land is dying. Vicious storms and an unstoppable blight ravage the scattered remnants of humanity, while fearsome new machines prowl their borders. Life on Earth is hurtling towards another extinction, and no one knows why. It's up to Aloy to uncover the secrets behind these threats and restore order and balance to the world. Along the way, she must reunite with old friends, forge alliances with warring new factions and unravel the legacy of the ancient past - all the while trying to stay one step ahead of a seemingly undefeatable new enemy.",
+                genre="Action Role Playing",
+                release_date=datetime(
+                    year=2022,
+                    month=2,
+                    day=18
+                    ),
+                publisher="Guerilla Games",
+                carousel_image='https://gameranx.com/wp-content/uploads/2022/01/horizon-forbidden-west-1-1024x576.jpg',
+                game_image="https://upload.wikimedia.org/wikipedia/en/6/69/Horizon_Forbidden_West_cover_art.jpg",
+                game_trailer='https://www.youtube.com/embed/Lq594XmpPBg',
+                price=59.99
+            ),
+            Game(
+                title="Control",
+                description="After a secretive agency in New York is invaded by an otherworldly threat, you become the new Director struggling to regain Control. This supernatural third-person action-adventure game will challenge you to master a combination of supernatural abilities, modifiable loadouts and reactive environments, while fighting through a deep and unpredictable world.",
+                genre="Action Adventure",
+                release_date=datetime(
+                    year=2019,
+                    month=8,
+                    day=27
+                    ),
+                publisher="Remedy Entertainment",
+                carousel_image='https://gaming-cdn.com/images/products/2692/orig/control-pc-game-epic-games-europe-cover.jpg?v=1668442766',
+                game_image="https://cdn1.epicgames.com/offer/calluna/Control_Portrait_Storefront_1200X1600_1200x1600-456c920cae7a0aa9b36670cd5e1237a1",
+                game_trailer='https://www.youtube.com/embed/uvKAHpIvbl8',
+                price=59.99
+            ),
         ]
         
         for game in games_data:
@@ -251,6 +315,86 @@ if __name__ == '__main__':
             ),
             GamePlatform(
                 game_id=6,
+                platform_id=7
+            ),
+            GamePlatform(
+                game_id=7,
+                platform_id=1
+            ),
+            GamePlatform(
+                game_id=7,
+                platform_id=4
+            ),
+            GamePlatform(
+                game_id=7,
+                platform_id=5
+            ),
+            GamePlatform(
+                game_id=7,
+                platform_id=6
+            ),
+            GamePlatform(
+                game_id=8,
+                platform_id=1
+            ),
+            GamePlatform(
+                game_id=8,
+                platform_id=2
+            ),
+            GamePlatform(
+                game_id=8,
+                platform_id=3
+            ),
+            GamePlatform(
+                game_id=8,
+                platform_id=4
+            ),
+            GamePlatform(
+                game_id=8,
+                platform_id=5
+            ),
+            GamePlatform(
+                game_id=8,
+                platform_id=6
+            ),
+            GamePlatform(
+                game_id=9,
+                platform_id=1
+            ),
+            GamePlatform(
+                game_id=9,
+                platform_id=2
+            ),
+            GamePlatform(
+                game_id=9,
+                platform_id=6
+            ),
+            GamePlatform(
+                game_id=10,
+                platform_id=1
+            ),
+            GamePlatform(
+                game_id=10,
+                platform_id=2
+            ),
+            GamePlatform(
+                game_id=10,
+                platform_id=3
+            ),
+            GamePlatform(
+                game_id=10,
+                platform_id=4
+            ),
+            GamePlatform(
+                game_id=10,
+                platform_id=5
+            ),
+            GamePlatform(
+                game_id=10,
+                platform_id=6
+            ),
+            GamePlatform(
+                game_id=10,
                 platform_id=7
             ),
         ]
