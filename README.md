@@ -38,10 +38,14 @@ To install and use this application, please follow the steps below:
     - This should install all required virtual environment dependencies for Python and Flask-SQLAlchemy
 3. Next run `npm install --prefix client` to install React dependencies
 4. From the root directory, run `pipenv shell` to enter into the Python shell
-5. The database should have a fresh seed already applied, but to run a new seed navigate to the `/server` directory and run `python seed.py`
+5. Due to the nature of Flask app security, you will need to generate and set your own secret key. Start by opening the application in your editor of choice and creating a `.env` file in the root directory
+6. Once the .env is created, set the secret key in the `.env` file as `APP_SECRET_KEY='your_secret_key_here'`
+    - I recommend importing os in the python environment and running `print(os.urandom(32))` to generate a 32 byte secret key that you can copy and assign as your secret key
+    - All .env files should already be ignored with the .gitignore file currently set up
+7. The database should have a fresh seed already applied, but to run a new seed navigate to the `/server` directory and run `python seed.py`
     - **CAUTION:** Running a new database seed will clear out any new data added to the database since the last database seed
-6. Once confirmation of the database seed is received, navigate back to the root directory and run `honcho start -f Profile.dev` to start the React App and Database simultaneously
-7. **IMPORTANT** This application has only been developed for mobile at this time. To ensure the proper experience, navigate to your broswers developer tools, and switch the view into mobile. This has not been formatted for tablet or desktop screens. 
+8. Once confirmation of the database seed is received, navigate back to the root directory and run `honcho start -f Profile.dev` to start the React App and Database simultaneously
+9. **IMPORTANT:** This application has only been developed for mobile at this time. To ensure the proper experience, navigate to your broswers developer tools, and switch the view into mobile. This has not been formatted for tablet or desktop screens.
 
 ## Usage
 
