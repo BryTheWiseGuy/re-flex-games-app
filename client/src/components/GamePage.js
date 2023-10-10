@@ -20,7 +20,7 @@ function GamePage({ user, setUser }) {
         res.json().then((user) => setUser(user));
       }
     });
-  }, []);
+  }, [setUser]);
 
   useEffect(() => {
     fetch(`/games/${id}`)
