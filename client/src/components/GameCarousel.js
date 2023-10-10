@@ -16,7 +16,9 @@ function GameCarousel({ games }) {
 								<img className='carousel-image' src={carousel_image} alt={title} />
 							</div>
 						</Carousel.Item>
-				)};
+				)} else {
+					return null
+				};
 			})};
 		</Carousel>
 	);
