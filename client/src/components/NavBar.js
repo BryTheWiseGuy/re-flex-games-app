@@ -9,19 +9,23 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function NavBar({ games, user, setUser }) {
   
-  const handleLogout = async ()  => {
-    const response = await fetch("/logout", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then((res) => {
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("/logout", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+  
       if (response.ok) {
         setUser(null);
+      } else {
+        console.error('Logout failed with status:', response.status);
       }
-    }).catch((error) => {
+    } catch (error) {
       console.error('Error during logout:', error);
-    });
+    }
   }
 
   function renderIfUser(user) {
