@@ -17,7 +17,7 @@ function UserProfile({ user, setUser }) {
         navigate('/login');
       };
     });
-  }, []);
+  }, [navigate, setUser]);
 
   return <div className='profile-page-container'>
     <div className='profile-page'>

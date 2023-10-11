@@ -18,8 +18,8 @@ function GameCarousel({ games }) {
 						</Carousel.Item>
 				)} else {
 					return null
-				};
-			})};
+				}
+			})}
 		</Carousel>
 	);
 }

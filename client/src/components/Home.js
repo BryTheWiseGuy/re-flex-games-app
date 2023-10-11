@@ -11,7 +11,7 @@ function Home({ user, games, setUser }) {
         res.json().then((user) => setUser(user));
       }
     });
-  }, []);
+  }, [setUser]);
 
   return (
     <div className="home-page">

@@ -16,7 +16,7 @@ function NavBar({ games, user, setUser }) {
         "Content-Type": "application/json"
       }
     }).then((res) => {
-      if (res.ok) {
+      if (response.ok) {
         setUser(null);
       }
     }).catch((error) => {
@@ -72,7 +72,7 @@ function NavBar({ games, user, setUser }) {
     <Navbar bg="dark" data-bs-theme="dark" expand="lg" sticky="top">
       <Container>
         <Navbar.Brand href="/">
-          <img className="nav-logo" src={logo} />
+          <img className="nav-logo" src={logo} alt='logo'/>
           Re:Flex Games
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

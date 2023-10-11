@@ -16,7 +16,7 @@ function UserLibrary({ user, setUser }) {
         res.json().then((user) => setUser(user));
       }
     });
-  }, []);
+  }, [setUser]);
 
   if (user) {
     const { library, username } = user;

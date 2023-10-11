@@ -18,7 +18,7 @@ function ShoppingCartPage({ user, setUser }) {
         navigate("/login");
       }
     });
-  }, []);
+  }, [navigate, setUser]);
 
   function calculateTotal(shoppingCart) {
     let totalPrice = 0;

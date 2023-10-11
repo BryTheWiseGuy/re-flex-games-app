@@ -51,7 +51,7 @@ function Login({ setUser }) {
             placeholder="Username"
             value={formik.values.username}
             onChange={formik.handleChange}
-            onBlue={formik.handleBlur}
+            onBlur={formik.handleBlur}
           ></input>
           <p className="error-text">
             {formik.touched.username && formik.errors.username}
@@ -66,7 +66,7 @@ function Login({ setUser }) {
             placeholder="Password"
             value={formik.values.password}
             onChange={formik.handleChange}
-            onBlue={formik.handleBlur}
+            onBlur={formik.handleBlur}
           ></input>
           <p className="error-text">
             {formik.touched.password && formik.errors.password}

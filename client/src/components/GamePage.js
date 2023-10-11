@@ -28,7 +28,7 @@ function GamePage({ user, setUser }) {
       .then((game) => {
         setGame(game);
       });
-  }, []);
+  }, [id]);
 
   const handlePurchase = (e) => {
     e.preventDefault();

@@ -8,7 +8,6 @@ function ProfileCard({ user, setUser }) {
   const [isAddingImage, setIsAddingImage] = useState(false);
   const [profileImage, setProfileImage] = useState(null)
   const [editedAboutMe, setEditedAboutMe] = useState("")
-  const [error, setError] = useState("")
 
   useEffect(() => {
     fetch("/check_session").then((res) => {
@@ -16,7 +15,7 @@ function ProfileCard({ user, setUser }) {
         res.json().then((user) => setUser(user));
       }
     });
-  }, []);
+  }, [setUser]);
 
   function handleSaveProfileImage(e) {
     e.preventDefault()
@@ -61,9 +60,9 @@ function ProfileCard({ user, setUser }) {
       {isAddingImage ? (
         <div className='profile-image-container'>
           {profileImage ? (
-              <img src={profile_image} alt='profile picture' />
+              <img src={profile_image} alt='user profile' />
             ) : (
-              <img src='https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png' alt='profile picture placeholder' />
+              <img src='https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png' alt='user profile placeholder' />
           )}
           <input
             className='text-input'
@@ -76,9 +75,9 @@ function ProfileCard({ user, setUser }) {
       ) : (
         <div className='profile-image-container'>
           {profile_image ? (
-            <img src={profile_image} alt='profile picture' />
+            <img src={profile_image} alt='user profile3' />
           ) : (
-            <img src='https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png' alt='profile picture placeholder' />
+            <img src='https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png' alt='profile placeholder' />
           )}
           <Button className='change-button' onClick={() => setIsAddingImage(true)}>Change Profile Image</Button>
         </div>
@@ -100,7 +99,6 @@ function ProfileCard({ user, setUser }) {
                 {editedAboutMe.length}/{250}
               </div>
             </div>
-            {error ? <p></p> : null}
             <Button variant='info' className='save-button' onClick={handleSaveAboutMe}>Save Changes</Button>
             <Button className='cancel-button' onClick={() => setIsEditing(false)}>Cancel</Button>
           </div>       
