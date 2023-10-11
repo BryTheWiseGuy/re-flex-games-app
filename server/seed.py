@@ -127,7 +127,7 @@ if __name__ == '__main__':
                 price=59.99
             ),
             Game(
-                title="Diable IV",
+                title="Diablo IV",
                 description="The endless battle between the High Heavens and the Burning Hells rages on as chaos threatens to consume Sanctuary. With ceaseless demons to slaughter, countless Abilities to master, nightmarish Dungeons, and Legendary loot, this vast, open world brings the promise of adventure and devastation.",
                 genre="Hack and Slash",
                 release_date=datetime(
