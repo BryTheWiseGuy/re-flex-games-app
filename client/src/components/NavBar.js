@@ -36,7 +36,8 @@ function NavBar({ games, user, setUser }) {
         <>
           <NavDropdown title={`${username}`}>
             <NavDropdown.Item
-              href={`/users/${username}`}
+              as={Link}
+              to={`/users/${username}`}
               style={{
                 fontSize: "24px",
                 display: "flex",
@@ -50,7 +51,8 @@ function NavBar({ games, user, setUser }) {
               ></i>
             </NavDropdown.Item>
             <NavDropdown.Item
-              href={`/users/${username}/library`}
+              as={Link}
+              to={`/users/${username}/library`}
               style={{
                 fontSize: "24px",
                 display: "flex",
@@ -64,7 +66,8 @@ function NavBar({ games, user, setUser }) {
               ></i>
             </NavDropdown.Item>
             <NavDropdown.Item
-              href={`/users/${username}/shopping_cart`}
+              as={Link}
+              to={`/users/${username}/shopping_cart`}
               style={{
                 fontSize: "24px",
                 display: "flex",
@@ -79,7 +82,8 @@ function NavBar({ games, user, setUser }) {
             </NavDropdown.Item>
           </NavDropdown>
           <Nav.Link
-            href="/"
+            as={Link}
+            to="/"
             onClick={handleLogout}
             style={{ display: "flex", alignItems: "center" }}
           >
