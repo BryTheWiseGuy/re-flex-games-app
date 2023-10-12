@@ -15,7 +15,7 @@ function App() {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
-    fetch("/games").then((res) => {
+    fetch("/api/games").then((res) => {
       if (res.ok) {
         res.json().then((games) => setGames(games));
       }

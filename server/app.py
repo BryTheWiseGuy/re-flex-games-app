@@ -406,21 +406,21 @@ def checkout(cart_id):
             
 # API Endpoints
 
-api.add_resource(UserSignUp, '/account_signup', endpoint='account_signup')
-api.add_resource(UserLogin, '/login', endpoint='login')
-api.add_resource(UserLogout, '/logout', endpoint='logout')
-api.add_resource(CheckSession, '/check_session', endpoint='check_session')
-api.add_resource(UsersResource, '/users', endpoint='users')
-api.add_resource(UserByUsernameResource, '/users/<username>')
-api.add_resource(UserLibraryByUsernameResource, '/users/<username>/library')
-api.add_resource(DeleteUserLibraryEntry, '/users/<username>/library/<int:game_id>')
-api.add_resource(UserShoppingCartResource, '/users/<username>/shopping_cart')
-api.add_resource(UserCartItemsResource, '/users/<username>/shopping_cart/items')
-api.add_resource(GamesIndexResource, '/games', endpoint='games')
-api.add_resource(GameByIDResource, '/games/<int:id>')
-api.add_resource(GamePlatformsResource, '/platforms', endpoint='platforms')
-api.add_resource(GamePlatformsForGameResource, '/games/<int:id>/platforms')
-api.add_resource(GamesForPlatformResource, '/platforms/<int:id>/games')
+api.add_resource(UserSignUp, '/api/account_signup', endpoint='account_signup')
+api.add_resource(UserLogin, '/api/login', endpoint='login')
+api.add_resource(UserLogout, '/api/logout', endpoint='logout')
+api.add_resource(CheckSession, '/api/check_session', endpoint='check_session')
+api.add_resource(UsersResource, '/api/users', endpoint='users')
+api.add_resource(UserByUsernameResource, '/api/users/<username>')
+api.add_resource(UserLibraryByUsernameResource, '/api/users/<username>/library')
+api.add_resource(DeleteUserLibraryEntry, '/api/users/<username>/library/<int:game_id>')
+api.add_resource(UserShoppingCartResource, '/api/users/<username>/shopping_cart')
+api.add_resource(UserCartItemsResource, '/api/users/<username>/shopping_cart/items')
+api.add_resource(GamesIndexResource, '/api/games', endpoint='games')
+api.add_resource(GameByIDResource, '/api/games/<int:id>')
+api.add_resource(GamePlatformsResource, '/api/platforms', endpoint='platforms')
+api.add_resource(GamePlatformsForGameResource, '/api/games/<int:id>/platforms')
+api.add_resource(GamesForPlatformResource, '/api/platforms/<int:id>/games')
 
 # Authorization and Authentication Functions
 

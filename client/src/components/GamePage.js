@@ -15,7 +15,7 @@ function GamePage({ user, setUser }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("/check_session").then((res) => {
+    fetch("/api/check_session").then((res) => {
       if (res.ok) {
         res.json().then((user) => setUser(user));
       }
@@ -23,7 +23,7 @@ function GamePage({ user, setUser }) {
   }, [setUser]);
 
   useEffect(() => {
-    fetch(`/games/${id}`)
+    fetch(`/api/games/${id}`)
       .then((res) => res.json())
       .then((game) => {
         setGame(game);
@@ -33,7 +33,7 @@ function GamePage({ user, setUser }) {
   const handlePurchase = (e) => {
     e.preventDefault();
     if (user) {
-      fetch(`/users/${user.username}/shopping_cart/items`, {
+      fetch(`/api/users/${user.username}/shopping_cart/items`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -10,7 +10,7 @@ function ProfileCard({ user, setUser }) {
   const [editedAboutMe, setEditedAboutMe] = useState("")
 
   useEffect(() => {
-    fetch("/check_session").then((res) => {
+    fetch("/api/check_session").then((res) => {
       if (res.ok) {
         res.json().then((user) => setUser(user));
       }
@@ -19,7 +19,7 @@ function ProfileCard({ user, setUser }) {
 
   function handleSaveProfileImage(e) {
     e.preventDefault()
-    fetch(`/users/${user.username}`, {
+    fetch(`/api/users/${user.username}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
@@ -37,7 +37,7 @@ function ProfileCard({ user, setUser }) {
 
   function handleSaveAboutMe(e) {
     e.preventDefault()
-    fetch(`/users/${user.username}`, {
+    fetch(`/api/users/${user.username}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"

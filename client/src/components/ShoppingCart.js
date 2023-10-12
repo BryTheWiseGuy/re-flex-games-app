@@ -11,7 +11,7 @@ function ShoppingCartPage({ user, setUser }) {
   const closeModal = () => setShowModal(false);
 
   useEffect(() => {
-    fetch("/check_session").then((res) => {
+    fetch("/api/check_session").then((res) => {
       if (res.ok) {
         res.json().then((user) => setUser(user));
       } else {
@@ -35,7 +35,7 @@ function ShoppingCartPage({ user, setUser }) {
 
     function handlePurchase(e) {
       e.preventDefault();
-      fetch(`/checkout/${user_shopping_cart[0][0].shopping_cart_id}`)
+      fetch(`/api/checkout/${user_shopping_cart[0][0].shopping_cart_id}`)
         .then((res) => res.json())
         .then((updatedUser) => {
           setUser(updatedUser);
@@ -52,7 +52,7 @@ function ShoppingCartPage({ user, setUser }) {
 
                 function handleDelete(e) {
                   e.preventDefault();
-                  fetch(`/users/${user.username}/shopping_cart/items`, {
+                  fetch(`/api/users/${user.username}/shopping_cart/items`, {
                     method: "DELETE",
                     headers: {
                       "Content-Type": "application/json",

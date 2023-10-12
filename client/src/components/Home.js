@@ -6,7 +6,7 @@ import "../stylesheets/HomePage.css";
 
 function Home({ user, games, setUser }) {
   useEffect(() => {
-    fetch("/check_session").then((res) => {
+    fetch("/api/check_session").then((res) => {
       if (res.ok) {
         res.json().then((user) => setUser(user));
       }
